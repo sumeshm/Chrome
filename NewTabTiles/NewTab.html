@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>New Tab</title>
+<style>
+.header {
+	background-color: white;
+	padding: 10px;
+	text-align: center;
+	font-size: 28px;
+}
+
+.footer {
+	background-color: white;
+	padding: 10px;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+}
+
+.grid-wrapper {
+	display: grid;
+	position: absolute;
+	left: 100px;
+	grid-gap: 20px;
+	grid-template-columns: repeat(6, 200px);
+}
+
+.box {
+	background-color: #4CAF50;
+	color: white;
+	text-align: center;
+	border-radius: 5px;
+	padding: 20px;
+	font-size: 150%;
+}
+
+.box:nth-child(even) {
+	background-color: #ccc;
+}
+
+.button {
+	background-color: white;
+	color: black;
+	padding: 20px;
+	text-align: center;
+	font-size: 150%;
+	border-radius: 5px;
+	border: 2px solid;
+	opacity: 0.4;
+}
+
+.button:hover {
+	opacity: 1
+}
+
+.button:nth-child(even) {
+	background-color: grey;
+}
+</style>
+</head>
+
+<body>
+	<script src="buttonAction.js"></script>
+	<div class="header">
+		<p>New Tab Tiles</p>
+	</div>
+	<div class="grid-wrapper">
+		<div class="box a">
+			<a target="_blank" href="https://devportal.intuit.com/">Dev-Portal</a>
+		</div>
+		<div class="box b">
+			<a target="_blank"
+				href="https://o365altimetrik.sharepoint.com/Pages/Default.aspx">Altimetrik</a>
+		</div>
+		<div class="box c">
+			<a target="_blank" href="http://mail.yahoo.com/">Yahoo</a>
+		</div>
+		<div class="box d">
+			<a target="_blank" href="http://jira.intuit.com/">JIRA</a>
+		</div>
+		<div class="box e">
+			<a target="_blank" href="https://www.team-bhp.com/forum/">Team-BHP</a>
+		</div>
+		<div class="box e">
+			<a target="_blank" href="https://www.team-bhp.com/forum/">Team-BHP</a>
+		</div>
+		<div>
+			<button class="button" onclick="buttonClick(event)">Google</button>
+		</div>
+	</div>
+
+	<div class="footer">
+		<p>Console</p>
+		<textarea id="console" rows="10" cols="200"></textarea>
+	</div>
+</body>
+</html>

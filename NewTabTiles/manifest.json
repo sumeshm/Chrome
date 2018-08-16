@@ -1,0 +1,40 @@
+{
+	"name": "NewTabTiles",
+	"manifest_version": 2,
+	"version": "1.0",
+	"description": "New Tab Page with Tiles",
+	"chrome_url_overrides": {
+		"newtab": "NewTab.html"
+	},
+	"browser_action": {
+		"default_icon": {
+			"16": "images/newTab-50.png",
+			"32": "images/newTab-50.png",
+			"48": "images/newTab-100.png",
+			"128": "images/newTab-500.png"
+		}
+	},
+	"background": {
+		"scripts": [
+			"background.js"
+		],
+		"persistent": true
+	},
+	"permissions": [
+		"activeTab",
+		"https://*/*",
+		"http://*/*",
+		"tabs"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"buttonAction.js"
+			]
+		}
+	]
+}
