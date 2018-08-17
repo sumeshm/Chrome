@@ -9,39 +9,26 @@
 <body>
 	<div class="header">New Tab Tiles</div>
 
-	<div class="grid-left">
-		<div>
-			<button class="tile_button" value="http://amazon.in/">Amazon</button>
-		</div>
-		<div>
-			<button class="tile_button" id="1"
-				value="https://devportal.intuit.com/">Dev-Portal</button>
-		</div>
-		<div>
-			<button class="tile_button"
-				value="https://o365altimetrik.sharepoint.com/Pages/Default.aspx">Altimetrik</button>
-		</div>
-		<div>
-			<button class="tile_button" value="http://mail.yahoo.com/">Yahoo</button>
-		</div>
-		<div>
-			<button class="tile_button" value="http://jira.intuit.com/">JIRA</button>
-		</div>
-		<div>
-			<button class="tile_button" value="https://www.team-bhp.com/forum/">Team-BHP</button>
-		</div>
-		<div>
-			<button class="tile_button" value="https://www.primevideo.com/">Prime</button>
-		</div>
+	<div class="grid-left" id="tiles_grid">
+		<!-- 
+		<button class="tile_button" value="http://amazon.in/">Amazon</button> 
+		-->
 	</div>
 
 	<div class="grid-right">
+		<div>
+			<button class="home_button" value="home">Home</button>
+		</div>
 		<div>
 			<button class="add_button" value="add">+</button>
 		</div>
 	</div>
 
+	<form id="add_bookmark_form"></form>
+
 	<div class="footer">
+		<select id="select_bookmarks">
+		</select>
 		<p>Console</p>
 		<textarea id="console" rows="10" cols="200"></textarea>
 	</div>

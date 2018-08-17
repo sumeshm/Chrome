@@ -1,3 +1,11 @@
+.navbar {
+	color: white;
+	font-size: 180%;
+	overflow: hidden;
+  	background-color: grey;
+	padding: 10px;
+}
+
 .header {
 	font-size: 200%;
 	text-align: center;
@@ -29,6 +37,14 @@
 	grid-template-columns: repeat(1, 150px);
 }
 
+.home_button {
+	background-color: grey;
+	color: white;
+	text-align: center;
+	font-size: 150%;
+	height: 50%;
+}
+
 .add_button {
 	background-color: grey;
 	color: white;
@@ -36,8 +52,8 @@
 	font-size: 250%;
 	border-radius: 5px;
 	border: 3px solid;
-	width: 32%;
-	height: 32%;
+	width: 30%;
+	height: 28%;
 }
 
 .tile_button {
