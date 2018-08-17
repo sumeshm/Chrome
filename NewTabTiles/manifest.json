@@ -21,12 +21,12 @@
 		"persistent": true
 	},
 	"permissions": [
-		"activeTab",
 		"https://*/*",
 		"http://*/*",
 		"tabs",
 		"bookmarks",
-		"fileSystem"
+		"fileSystem",
+		"storage"
 	],
 	"content_scripts": [
 		{
