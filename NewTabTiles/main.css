@@ -2,6 +2,7 @@
 	font-size: 200%;
 	text-align: center;
 	padding: 20px;
+	font-family: verdana;
 }
 
 .footer {
@@ -11,42 +12,83 @@
 	width: 100%;
 	position: absolute;
 	bottom: 0px;
+	font-family: verdana;
 }
 
 .grid-left {
 	display: grid;
 	position: absolute;
-	left: 50px;
-	grid-gap: 40px 15px;
+	left: 60px;
+	grid-gap: 40px 10px;
 	grid-template-columns: repeat(6, 200px);
 }
 
 .grid-right {
 	display: grid;
+	grid-template-columns: repeat(3, 80px);
+	grid-gap: 10px;
 	position: absolute;
-	right: 70px;
-	top: 200px;
-	grid-template-columns: repeat(1, 200px);
+	right: 50px;
+	top: 150px;
 }
 
-.home_button {
-	background-color: grey;
-	color: white;
-	text-align: center;
-	font-size: 150%;
-	height: 50%;
+.grid-right :hover {
+	color: black;
 }
 
-.add_button {
+.grid-right > input {
 	color: grey;
-	text-align: center;
-	font-size: 200%;
 	border-radius: 5px;
-	border: 3px solid;
-	width: 80%;
-	height: 28%;
 	border: 1px solid grey;
-	padding: 5px;
+	font-size: 15px;
+	padding: 10px 10px;
+}
+
+.grid-right > button {
+	color: grey;
+	border-radius: 5px;
+	border: 1px solid grey;
+}
+
+.grid-right > select {
+	color: grey;
+	border-radius: 5px;
+	border: 1px solid grey;
+	font-size: 14px;
+	height: 30px;
+}
+
+.input {
+	grid-column: 1/4;
+}
+
+.add {
+	grid-column: 1/2;
+	grid-row: 3/4;
+	font-size: 20px;
+	padding: 10px 0px;
+}
+
+.remove {
+	grid-column: 3;
+	grid-row: 3;
+	font-size: 20px;
+	padding: 10px 0px;
+}
+
+.other {
+	grid-row: 4;
+	color: grey;
+	border-radius: 5px;
+	border: 1px solid grey;
+	text-align: center;
+	padding: 5px 5px;
+	font-size: 16px;
+}
+
+.book_mark {
+	grid-column: 1/4;
+	grid-row: 5;
 }
 
 .tile_button {
@@ -58,19 +100,9 @@
 	border-radius: 5px;
 	border: 3px solid;
 	opacity: 0.4;
-	width: 90%
+	width: 80%;
 }
 
 .tile_button:hover {
 	opacity: 1
-}
-
-.add_input {
-	color: black;
-	text-align: center;
-	font-size: 110%;
-	border-radius: 5px;
-	border: 1px solid grey;
-	padding: 10px 20px;
-	width: 100%;
 }

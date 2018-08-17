@@ -16,34 +16,19 @@
 	</div>
 
 	<div class="grid-right">
-		<p>
-			<input class="add_input" type="text" id="add_title" placeholder="Title, e.g. Google" />
-		</p>
-		<p>
-			<input class="add_input" type="text" id="add_url" placeholder="Url, e.g. http://www.google.com" />
-		</p>
-		<p>
-			<button class="add_button" value="add">+</button>
-		</p>
-		<p>
-			<button class="add_button" value="remove">-</button>
-		</p>
-		<p>
-			<button class="add_button" value="save">Save</button>
-		</p>
-		<p>
-			<button class="add_button" value="clear">Clear</button>
-		</p>
-		<p>
-			<button class="add_button" value="bkp">Restore</button>
-		</p>
+		<input class="input" type="text" id="add_title"
+			placeholder="Title, e.g. Google"/>
+		<input class="input" type="text"
+			id="add_url" placeholder="Url, e.g. http://www.google.com"/>
+		<button class="add" value="add">+</button>
+		<button class="remove" value="remove">-</button>
+		<button class="other" value="save">Save</button>
+		<button class="other" value="clear">Clear</button>
+		<button class="other" value="restore">Restore</button>
+		<select class="book_mark" id="add_bookmark"></select>
 	</div>
 
-	<form id="add_bookmark_form"></form>
-
 	<div class="footer">
-		<select id="select_bookmarks">
-		</select>
 		<p>Console</p>
 		<textarea id="console" rows="10" cols="200"></textarea>
 	</div>

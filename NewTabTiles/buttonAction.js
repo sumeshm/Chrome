@@ -4,16 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	// readInputFile();
 	readFromStorage();
 
-	// add_button and home_button click listener
-	var addButtons = document.querySelectorAll('.add_button');
-	logMessage("init: ", "addButtons.length=" + addButtons.length);
-	for (i = 0; i < addButtons.length; i++) {
-		addButtons[i].addEventListener('click', process_buttonClick);
+	// add, remove,  and home_button click listener
+	document.querySelector('.add').addEventListener('click', process_buttonClick);
+	document.querySelector('.remove').addEventListener('click', process_buttonClick);
+	var otherButtons = document.querySelectorAll('.other');
+	for (i = 0; i < otherButtons.length; i++) {
+		otherButtons[i].addEventListener('click', process_buttonClick);
 	}
 
 	// book-marks list select listener
-	document.getElementById("select_bookmarks").addEventListener('change',
-			process_listChange);
+	document.querySelector('.book_mark').addEventListener('change', process_listChange);
 
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
@@ -148,14 +148,18 @@ function process_buttonClick(event) {
 		while (tiles_grid.hasChildNodes()) {
 			tiles_grid.removeChild(tiles_grid.lastChild);
 		}
-	} else if (target.value == "bkp") {
+	} else if (target.value == "restore") {
+		var tiles_grid = document.getElementById("tiles_grid");
+		while (tiles_grid.hasChildNodes()) {
+			tiles_grid.removeChild(tiles_grid.lastChild);
+		}
 		readInputFile();
 	}
 }
 
 // handle loading of book-marks
 function process_bookmark(bookmarks) {
-	var select = document.getElementById("select_bookmarks")
+	var select = document.querySelector('.book_mark');
 
 	for (var i = 0; i < bookmarks.length; i++) {
 		var bookmark = bookmarks[i];
@@ -173,7 +177,7 @@ function process_bookmark(bookmarks) {
 
 // handle selection of book-mark from drop down list
 function process_listChange() {
-	var item = document.getElementById("select_bookmarks").value;
+	var item = document.querySelector('.book_mark').value;
 	logMessage("List_Selected: ", item, "")
 }
 
