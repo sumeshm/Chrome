@@ -64,10 +64,8 @@ function addOneTile(title, url) {
 	logMessage("addOneTile: ", "tileInfo: " + title + "- " + url);
 
 	if (title.length != 0 && url.length != 0) {
-
 		var tiles_grid = document.getElementById("tiles_grid");
 		var currButtons = tiles_grid.getElementsByClassName('tile_button');
-		logMessage("addOneTile: ", "currButtons=" + currButtons.length);
 
 		if (currButtons.length < 30) {
 			var button = document.createElement("button");
@@ -92,7 +90,7 @@ function removeOneTile(title) {
 		if (currButtons.length > 0) {
 			for (i = 0; i < currButtons.length; i++) {
 				var button = currButtons[i];
-				if (button.innerText == title) {
+				if (button.innerText.toUpperCase() === title.toUpperCase()) {
 					logMessage("removeOneTile: ", "FOUND @ " + i);
 					tiles_grid.removeChild(button);
 					break;
@@ -166,6 +164,7 @@ function process_bookmark(bookmarks) {
 		if (bookmark.url) {
 			var option = document.createElement("option");
 			option.text = bookmark.title;
+			option.value = bookmark.url;
 			select.add(option);
 		}
 
@@ -177,8 +176,12 @@ function process_bookmark(bookmarks) {
 
 // handle selection of book-mark from drop down list
 function process_listChange() {
-	var item = document.querySelector('.book_mark').value;
-	logMessage("List_Selected: ", item, "")
+	var urlValue = document.querySelector('.book_mark').value;
+	logMessage("process_listChange: ", "URL:" + urlValue)
+	chrome.tabs.create({
+		url : urlValue,
+		active : false
+	});
 }
 
 // read JSON file for tile list and add them to HTML page
