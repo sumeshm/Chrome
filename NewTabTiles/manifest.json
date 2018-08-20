@@ -25,7 +25,6 @@
 		"http://*/*",
 		"tabs",
 		"bookmarks",
-		"fileSystem",
 		"storage"
 	],
 	"content_scripts": [
@@ -35,7 +34,7 @@
 				"https://*/*"
 			],
 			"js": [
-				"buttonAction.js"
+				"content.js"
 			]
 		}
 	],

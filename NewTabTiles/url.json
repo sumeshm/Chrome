@@ -1,34 +1,70 @@
 [
 	{
-		"title": "Amazon",
-		"url": "http://amazon.in/"
-	},
-	{
 		"title": "Google",
-		"url": "https://www.google.co.in/"
+		"url": "https://www.google.co.in"
 	},
 	{
 		"title": "Dev-Portal",
-		"url": "https://devportal.intuit.com/"
+		"url": "https://devportal.intuit.com/a1/index.html?legacy#/main/my-accounts"
 	},
 	{
-		"title": "Altimetrik",
-		"url": "https://o365altimetrik.sharepoint.com/Pages/Default.aspx"
+		"title": "Service-Now",
+		"url": "https://intuit.service-now.com/sp?id=my_tickets"
 	},
 	{
-		"title": "Yahoo",
-		"url": "http://mail.yahoo.com/"
+		"title": "GIT",
+		"url": "https://github.intuit.com/Contact-Center-Services"
 	},
 	{
 		"title": "JIRA",
-		"url": "http://jira.intuit.com/"
+		"url": "http://jira.intuit.com"
+	},
+	{
+		"title": "Confluence",
+		"url": "https://wiki.intuit.com"
+	},
+	{
+		"title": "Alti-Coral",
+		"url": "https://o365altimetrik.sharepoint.com/Pages/Default.aspx"
+	},
+	{
+		"title": "Alti-Mail",
+		"url": "https://outlook.office365.com/owa/?realm=altimetrik.com&exsvurl=1&ll-cc=2057&modurl=0"
+	},
+	{
+		"title": "Alti-Time",
+		"url": "https://aep.altimetrik.com/GlobalTimesheet"
+	},
+	{
+		"title": "Alti-Leave",
+		"url": "https://ebfz.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_afrLoop=4924040914946095&_adf.ctrl-state=10rhv2oz0s_19"
+	},
+	{
+		"title": "Yahoo",
+		"url": "http://mail.yahoo.com"
+	},
+	{
+		"title": "Gmail",
+		"url": "https://mail.google.com/mail/u/0/#inbox"
+	},
+	{
+		"title": "Amazon",
+		"url": "http://www.amazon.in"
 	},
 	{
 		"title": "Team-BHP",
-		"url": "https://www.team-bhp.com/forum/"
+		"url": "https://www.team-bhp.com/forum"
+	},
+	{
+		"title": "Bescom",
+		"url": "https://www.bescom.co.in/SCP/MyAccount/QuickPayment.aspx"
+	},
+	{
+		"title": "Airtel",
+		"url": "https://www.airtel.in/s/selfcare"
 	},
 	{
 		"title": "Prime",
-		"url": "https://www.primevideo.com/"
+		"url": "https://www.primevideo.com"
 	}
 ]
