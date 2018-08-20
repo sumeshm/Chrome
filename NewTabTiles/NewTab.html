@@ -19,16 +19,19 @@
 	</div>
 
 	<div class="grid-right">
-		<input class="input" type="text" id="add_title"
-			placeholder="Title, e.g. Google"/>
-		<input class="input" type="text"
-			id="add_url" placeholder="Url, e.g. http://www.google.com"/>
-		<button class="add" value="add">+</button>
-		<button class="remove" value="remove">-</button>
-		<button class="other" value="save">Save</button>
-		<button class="other" value="clear">Clear</button>
-		<button class="other" value="restore">Restore</button>
-		<select class="book_mark" id="add_bookmark"></select>
+		<div class="button add">+</div>
+		<div class="button remove">-</div>
+		<div class="button save">Save</div>
+		<div class="button clear">Clear</div>
+		<div class="button restore">Restore</div>
+		<select class="select" id="add_bookmark"></select>
+		<div class="grid_input" id="grid_input">
+			<input class="input title" type="text" id="input_title" placeholder="Title, e.g. Google" />
+			<input class="input url" type="text"  id="input_url" placeholder="Url, e.g. http://www.google.com" />
+			<div class="button cancel">Cancel</div>
+			<div class="button addTile" id="addTileButton">Add Tile</div>
+			<div class="button removeTile" id="removeTileButton">Remove Tile</div>
+		</div>
 	</div>
 
 	<div class="footer">

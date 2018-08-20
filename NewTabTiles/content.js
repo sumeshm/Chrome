@@ -1,19 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-	// populate tiles
-	// readInputFile();
+	// populate tiles from cache
 	readFromStorage();
 
-	// add, remove,  and home_button click listener
-	document.querySelector('.add').addEventListener('click', process_buttonClick);
-	document.querySelector('.remove').addEventListener('click', process_buttonClick);
-	var otherButtons = document.querySelectorAll('.other');
-	for (i = 0; i < otherButtons.length; i++) {
-		otherButtons[i].addEventListener('click', process_buttonClick);
+	// register click listener for ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
+	var buttons = document.querySelectorAll('.button');
+	for (i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener('click', process_buttonClick);
 	}
 
 	// book-marks list select listener
-	document.querySelector('.book_mark').addEventListener('change', process_listChange);
+	document.querySelector('.select').addEventListener('change',
+			process_listChange);
 
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
@@ -23,12 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function writeToStorage(jsonArray) {
 	var TilesInfoKey = 'TilesInfoKey';
 	var jsonArrayStr = JSON.stringify(jsonArray);
-	logMessage("writeToStorage: ", "tileInfoStr=" + jsonArrayStr);
+	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
 
 	chrome.storage.local.set({
 		TilesInfoKey : jsonArrayStr
 	}, function() {
-		logMessage("writeToStorage: ", "set key done");
+		logMessage("Write_Storage: ", "set key done");
 	});
 }
 
@@ -38,10 +36,10 @@ function readFromStorage() {
 
 	chrome.storage.local.get([ TilesInfoKey ], function(jsonArrayStr) {
 		if (!jsonArrayStr.TilesInfoKey) {
-			logMessage("readFromStorage: ", "get key.TilesInfoKey=UNDEFINED");
+			logMessage("Read_Storage: ", "get key.TilesInfoKey=UNDEFINED");
 		} else {
 			var jsonArray = JSON.parse(jsonArrayStr.TilesInfoKey);
-			logMessage("readFromStorage: ", "jsonArray.length="
+			logMessage("Read_Storage: ", "jsonArray.length="
 					+ jsonArray.length);
 
 			addMultipleTiles(jsonArray);
@@ -51,7 +49,7 @@ function readFromStorage() {
 
 // add tiles to HTML page, for given JSON array (tile-info objects)
 function addMultipleTiles(jsonArray) {
-	logMessage("addMultipleTiles: ", "jsonArray=" + jsonArray.length);
+	logMessage("Add_MultipleTiles: ", "jsonArray=" + jsonArray.length);
 
 	for (i = 0; i < jsonArray.length; i++) {
 		var tileInfo = jsonArray[i];
@@ -61,7 +59,7 @@ function addMultipleTiles(jsonArray) {
 
 // add a tile to HTML page
 function addOneTile(title, url) {
-	logMessage("addOneTile: ", "tileInfo: " + title + "- " + url);
+	logMessage("Add_OneTile: ", "tileInfo: " + title + "- " + url);
 
 	if (title.length != 0 && url.length != 0) {
 		var tiles_grid = document.getElementById("tiles_grid");
@@ -83,7 +81,7 @@ function addOneTile(title, url) {
 
 // remove one tile from HTML page by matching title
 function removeOneTile(title) {
-	logMessage("removeOneTile: ", "title=" + title);
+	logMessage("Remove_OneTile: ", "title=" + title);
 	if (title.length != 0) {
 		var tiles_grid = document.getElementById("tiles_grid");
 		var currButtons = tiles_grid.getElementsByClassName('tile_button');
@@ -105,8 +103,8 @@ function removeOneTile(title) {
 // handle tile-button press
 function process_tileButtonClick(event) {
 	var target = event.target || event.srcElement;
-	logMessage("TileButton_Click: ", target);
-	logMessage("TileButton_Click: ", target.value);
+	logMessage("process_buttonClick: ", "target=" + target + ", class="
+			+ target.className);
 
 	chrome.tabs.create({
 		url : target.value,
@@ -114,50 +112,98 @@ function process_tileButtonClick(event) {
 	});
 }
 
-// handle ADD, REMOVE button press
+// handle ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
 function process_buttonClick(event) {
 	var target = event.target || event.srcElement;
-	logMessage("process_buttonClick: ", target);
-	logMessage("process_buttonClick: ", target.value);
+	logMessage("Button_Click: ", "target=" + target + ", class="
+			+ target.className);
 
-	if (target.value == "add") {
-		var inputTitle = document.getElementById("add_title").value;
-		var inputUrl = document.getElementById("add_url").value;
-		addOneTile(inputTitle, inputUrl);
-	} else if (target.value == "remove") {
-		var inputTitle = document.getElementById("add_title").value;
-		removeOneTile(inputTitle);
-	} else if (target.value == "save") {
-		var jsonArrayStr = "["
-		var tiles_grid = document.getElementById("tiles_grid");
-
-		var jsonArray = [];
-		var currButtons = tiles_grid.getElementsByClassName('tile_button');
-		for (i = 0; i < currButtons.length; i++) {
-			jsonArray.push({
-				"title" : currButtons[i].innerText,
-				"url" : currButtons[i].value
-			});
-		}
-
+	if (target.className == "button add") {
+		showPopup("add");
+	} else if (target.className == "button remove") {
+		showPopup("remove");
+	} else if (target.className == "button save") {
+		var jsonArray = createTilesJsonArray();
 		writeToStorage(jsonArray);
-	} else if (target.value == "clear") {
+	} else if (target.className == "button clear") {
 		var tiles_grid = document.getElementById("tiles_grid");
 		while (tiles_grid.hasChildNodes()) {
 			tiles_grid.removeChild(tiles_grid.lastChild);
 		}
-	} else if (target.value == "restore") {
+	} else if (target.className == "button restore") {
 		var tiles_grid = document.getElementById("tiles_grid");
 		while (tiles_grid.hasChildNodes()) {
 			tiles_grid.removeChild(tiles_grid.lastChild);
 		}
 		readInputFile();
+	} else if (target.className == "button cancel") {
+		hidePopup();
+	} else if (target.className == "button addTile") {
+		var inputTitle = document.getElementById("input_title").value;
+		var inputUrl = document.getElementById("input_url").value;
+		addOneTile(inputTitle, inputUrl);
+		hidePopup();
+	} else if (target.className == "button removeTile") {
+		var inputTitle = document.getElementById("input_title").value;
+		removeOneTile(inputTitle);
+		hidePopup();
 	}
+}
+
+// fetch list of tiles and build corresponding JSON array
+function createTilesJsonArray()
+{
+	var jsonArray = [];
+	var currButtons = document.getElementsByClassName("tile_button");
+
+	for (i = 0; i < currButtons.length; i++) {
+		jsonArray.push({
+			"title" : currButtons[i].innerText,
+			"url" : currButtons[i].value
+		});
+	}
+
+	return jsonArray;
+}
+
+// show the user input pop-up
+function showPopup(action)
+{
+	document.getElementById("input_title").value = "";
+	document.getElementById("input_url").value = "";
+	document.getElementById("input_title").style.visibility = 'visible';
+
+	if (action == "add") {
+		// reset text input fields
+		document.getElementById("addTileButton").style.visibility = 'visible';
+		document.getElementById("removeTileButton").style.visibility = 'hidden';
+		document.getElementById("input_url").style.visibility = 'visible';
+	} else if (action == "remove") {
+		document.getElementById("addTileButton").style.visibility = 'hidden';
+		document.getElementById("removeTileButton").style.visibility = 'visible';
+		document.getElementById("input_url").style.visibility = 'hidden';
+	}
+
+	var gridInput = document.getElementById("grid_input");
+	gridInput.style.visibility = 'visible';
+}
+
+// hide the user input pop-up
+function hidePopup()
+{
+	document.getElementById("addTileButton").style.visibility = 'hidden';
+	document.getElementById("removeTileButton").style.visibility = 'hidden';
+	document.getElementById("input_title").style.visibility = 'hidden';
+	document.getElementById("input_url").style.visibility = 'hidden';
+
+	var gridInput = document.getElementById("grid_input");
+	gridInput.style.visibility = 'hidden';
 }
 
 // handle loading of book-marks
 function process_bookmark(bookmarks) {
-	var select = document.querySelector('.book_mark');
+	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
+	var select = document.querySelector('.select');
 
 	for (var i = 0; i < bookmarks.length; i++) {
 		var bookmark = bookmarks[i];
@@ -176,8 +222,8 @@ function process_bookmark(bookmarks) {
 
 // handle selection of book-mark from drop down list
 function process_listChange() {
-	var urlValue = document.querySelector('.book_mark').value;
-	logMessage("process_listChange: ", "URL:" + urlValue)
+	var urlValue = document.querySelector('.select').value;
+	logMessage("BookMark_Selected: ", "URL:" + urlValue)
 	chrome.tabs.create({
 		url : urlValue,
 		active : false
@@ -192,7 +238,7 @@ function readInputFile() {
 		if (fileReadRequest.readyState === 4) {
 			var fileContents = fileReadRequest.responseText;
 			var jsonArray = JSON.parse(fileContents);
-			logMessage("readInputFile: ", "jsonArray=" + jsonArray.length);
+			logMessage("Read_File: ", "jsonArray=" + jsonArray.length);
 
 			addMultipleTiles(jsonArray);
 		}

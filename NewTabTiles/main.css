@@ -1,3 +1,4 @@
+/* -------------------- header and footer -------------------- */
 .header {
 	font-size: 240%;
 	text-align: center;
@@ -17,80 +18,13 @@
 	color: orange
 }
 
+/* -------------------- left grid with tiles -------------------- */
 .grid-left {
 	display: grid;
 	position: absolute;
 	grid-gap: 55px 10px;
 	grid-template-columns: repeat(6, 200px);
 	padding: 10px 40px;
-}
-
-.grid-right {
-	display: grid;
-	grid-template-columns: repeat(3, 80px);
-	grid-gap: 10px;
-	position: absolute;
-	right: 0px;
-	padding: 10px 40px;
-}
-
-.grid-right :hover {
-	color: black;
-}
-
-.grid-right>input {
-	color: grey;
-	border-radius: 5px;
-	border: 1px solid grey;
-	font-size: 15px;
-	padding: 10px 10px;
-}
-
-.grid-right>button {
-	color: grey;
-	border-radius: 5px;
-	border: 1px solid grey;
-}
-
-.grid-right>select {
-	color: grey;
-	border-radius: 5px;
-	border: 1px solid grey;
-	font-size: 14px;
-	height: 30px;
-}
-
-.input {
-	grid-column: 1/4;
-}
-
-.add {
-	grid-column: 1/2;
-	grid-row: 3/4;
-	font-size: 20px;
-	padding: 10px 0px;
-}
-
-.remove {
-	grid-column: 3;
-	grid-row: 3;
-	font-size: 20px;
-	padding: 10px 0px;
-}
-
-.other {
-	grid-row: 4;
-	color: grey;
-	border-radius: 5px;
-	border: 1px solid grey;
-	text-align: center;
-	padding: 5px 5px;
-	font-size: 16px;
-}
-
-.book_mark {
-	grid-column: 1/4;
-	grid-row: 5;
 }
 
 .tile_button {
@@ -106,4 +40,114 @@
 
 .tile_button:hover {
 	box-shadow: 4px 4px;
+}
+
+/* -------------------- right grid with buttons -------------------- */
+.grid-right {
+	display: grid;
+	grid-template-columns: repeat(3, [ col ] 80px);
+	grid-template-rows: repeat(4, [ row ] auto);
+	grid-gap: 10px;
+	padding: 10px 40px;
+	position: absolute;
+	right: 0px;
+	text-align: center;
+}
+
+.grid-right :hover {
+	color: black;
+}
+
+.button {
+	color: grey;
+	border-radius: 5px;
+	border: 1px solid grey;
+	padding: 10px 10px;
+}
+
+.add {
+	grid-column: col/span 1;
+	grid-row: row 1;
+	font-size: 200%;
+}
+
+.remove {
+	grid-column: col 3/span 1;
+	grid-row: row 1;
+	font-size: 200%;
+}
+
+.save {
+	grid-column: col/span 1;
+	grid-row: row 2/span 1;
+	font-size: 120%;
+}
+
+.clear {
+	grid-column: col 2/span 1;
+	grid-row: row 2;
+	font-size: 120%;
+}
+
+.restore {
+	grid-column: col 3/span 1;
+	grid-row: row 2;
+	font-size: 120%;
+}
+
+.select {
+	grid-column: col 1/span 3;
+	grid-row: row 3;
+	font-size: 120%;
+}
+
+/* -------------------- right grid pop-up -------------------- */
+.grid_input {
+	grid-column: col 1/span 3;
+	grid-row: row 4;
+	display: grid;
+	grid-template-columns: repeat(3, [ col ] 70px);
+	grid-template-rows: repeat(2, [ row ] auto);
+	background-color: #EAECEE;
+	grid-gap: 10px;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid grey;
+	padding: 10px 15px;
+	visibility: hidden;
+}
+
+.title {
+	grid-column: col 1/span 3;
+	grid-row: 1;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 10px 5px;
+}
+
+.url {
+	grid-column: col 1/span 3;
+	grid-row: 2;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 10px 5px;
+}
+
+.cancel {
+	grid-column: col 1/span 1;
+	grid-row: 3;
+	background-color: white;
+}
+
+.addTile {
+	grid-column: col 3/span 1;
+	grid-row: 3;
+	background-color: white;
+}
+
+.removeTile {
+	grid-column: col 3/span 1;
+	grid-row: 3;
+	background-color: white;
+	visibility: hidden;
 }
