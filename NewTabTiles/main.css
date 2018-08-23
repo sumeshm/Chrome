@@ -1,15 +1,15 @@
 /* -------------------- header and footer -------------------- */
 .header {
-	font-size: 240%;
+	font-size: 250%;
+	padding: 1%;
 	text-align: center;
-	padding: 20px;
 	font-family: verdana;
 	color: orange
 }
 
 .footer {
-	font-size: 120%;
-	padding: 10px;
+	font-size: 130%;
+	padding: 1%;
 	text-align: center;
 	width: 100%;
 	position: absolute;
@@ -18,136 +18,166 @@
 	color: orange
 }
 
+/* -------------------- main grid container -------------------- */
+.grid-main {
+	display: grid;
+	grid-template-columns: 80% 20%;
+	padding: 1em 1em;
+}
+
 /* -------------------- left grid with tiles -------------------- */
 .grid-left {
 	display: grid;
-	position: absolute;
-	grid-gap: 55px 10px;
-	grid-template-columns: repeat(6, 200px);
-	padding: 10px 40px;
+	grid-template-columns: repeat(6, 13em);
+	grid-gap: 3em 4em;
+	padding: 1em 1em;
 }
 
 .tile_button {
 	background-color: #EAECEE;
-	padding: 20px 0px;
 	text-align: center;
 	font-size: 150%;
+	padding: 1em 1em;
 	border-radius: 5px;
 	border: 1px solid;
-	width: 80%;
 	opacity: .6;
 }
 
 .tile_button:hover {
-	box-shadow: 4px 4px;
+	box-shadow: 5px 5px;
 }
 
-/* -------------------- right grid with buttons -------------------- */
+/* -------------------- right grid -------------------- */
 .grid-right {
 	display: grid;
-	grid-template-columns: repeat(3, [ col ] 80px);
-	grid-template-rows: repeat(4, [ row ] auto);
-	grid-gap: 10px;
-	padding: 10px 40px;
-	position: absolute;
-	right: 0px;
+	grid-gap: 1em 1em;
 	text-align: center;
+	padding: 1em 1em;
 }
 
-.grid-right :hover {
-	color: black;
+/* -------------------- right-grid buttons -------------------- */
+.grid-right-buttons {
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"add . remove"
+		"save clear restore"
+		"select select select"
+		"popup popup popup";
+	grid-gap: 1em 1em;
+	text-align: center;
+	background-color: #EAECEE;
+	padding: 1em 1em;
+	border-radius: 5px;
+	border: 2px solid black;
+	height: 15em;
 }
 
 .button {
 	color: grey;
+	font-size: 100%;
+	text-align: center;
+	padding: 1em 1em;
 	border-radius: 5px;
 	border: 1px solid grey;
-	padding: 10px 10px;
+}
+
+.button :hover {
+	color: black;
 }
 
 .add {
-	grid-column: col/span 1;
-	grid-row: row 1;
-	font-size: 200%;
+	grid-area: add;
+	padding: 1em 0em;
 }
 
 .remove {
-	grid-column: col 3/span 1;
-	grid-row: row 1;
-	font-size: 200%;
+	grid-area: remove;
+	padding: 1em 0em;
 }
 
 .save {
-	grid-column: col/span 1;
-	grid-row: row 2/span 1;
-	font-size: 120%;
+	grid-area: save;
+	grid-row-start: 2;
 }
 
 .clear {
-	grid-column: col 2/span 1;
-	grid-row: row 2;
-	font-size: 120%;
+	grid-area: clear;
+	grid-row-start: 2;
 }
 
 .restore {
-	grid-column: col 3/span 1;
-	grid-row: row 2;
-	font-size: 120%;
+	grid-area: restore;
+	grid-row-start: 2;
 }
 
 .select {
-	grid-column: col 1/span 3;
-	grid-row: row 3;
-	font-size: 120%;
+	grid-area: select;
+	width: 100%;
 }
 
-/* -------------------- right grid pop-up -------------------- */
-.grid_input {
-	grid-column: col 1/span 3;
-	grid-row: row 4;
+/* -------------------- right grid add-pop-up -------------------- */
+.grid_popup-add {
 	display: grid;
-	grid-template-columns: repeat(3, [ col ] 70px);
-	grid-template-rows: repeat(2, [ row ] auto);
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"title title title"
+		"url url url"
+		"cancel . addTile";
 	background-color: #EAECEE;
-	grid-gap: 10px;
+	grid-gap: 1em;
 	text-align: center;
 	border-radius: 5px;
 	border: 1px solid grey;
-	padding: 10px 15px;
-	visibility: hidden;
+	padding: 1em 1em;
+	border: 2px solid black;
+	height: 12em;
 }
 
 .title {
-	grid-column: col 1/span 3;
-	grid-row: 1;
+	grid-area: title;
 	background-color: white;
 	border: 1px solid grey;
-	padding: 10px 5px;
+	padding: 1em 1em;
 }
 
 .url {
-	grid-column: col 1/span 3;
-	grid-row: 2;
+	grid-area: url;
 	background-color: white;
 	border: 1px solid grey;
-	padding: 10px 5px;
+	padding: 1em 1em;
 }
 
 .cancel {
-	grid-column: col 1/span 1;
-	grid-row: 3;
+	grid-area: cancel;
 	background-color: white;
 }
 
 .addTile {
-	grid-column: col 3/span 1;
-	grid-row: 3;
+	grid-area: addTile;
 	background-color: white;
 }
 
+/* -------------------- right grid remove-pop-up -------------------- */
+.grid_popup-remove {
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"title title title"
+		"cancel . removeTile";
+	background-color: #EAECEE;
+	grid-gap: 1em;
+	text-align: center;
+	padding: 1em 1em;
+	border-radius: 5px;
+	border: 2px solid black;
+	height: 9em;
+}
+
 .removeTile {
-	grid-column: col 3/span 1;
-	grid-row: 3;
+	grid-area: removeTile;
 	background-color: white;
-	visibility: hidden;
 }

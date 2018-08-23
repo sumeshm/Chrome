@@ -1,36 +1,23 @@
+
 document.addEventListener('DOMContentLoaded', function() {
+
+	logMessage("INIT: ", "Start");
 
 	// populate tiles from cache
 	readFromStorage();
 
-	// register click listener for ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
-	var buttons = document.querySelectorAll('.button');
-	for (i = 0; i < buttons.length; i++) {
-		buttons[i].addEventListener('click', process_buttonClick);
-	}
-
-	// book-marks list select listener
-	document.querySelector('.select').addEventListener('change',
-			process_listChange);
+	// create the user action buttons
+	showButtonsPopup();
 
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
+	
+	logMessage("INIT: ", "End");
 });
 
-// write tiles list (JSON array) to storage
-function writeToStorage(jsonArray) {
-	var TilesInfoKey = 'TilesInfoKey';
-	var jsonArrayStr = JSON.stringify(jsonArray);
-	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
+var bookMarkList;
 
-	chrome.storage.local.set({
-		TilesInfoKey : jsonArrayStr
-	}, function() {
-		logMessage("Write_Storage: ", "set key done");
-	});
-}
-
-// read storage for tile list and add them to HTML page
+//read storage for tile list and add them to HTML page
 function readFromStorage() {
 	var TilesInfoKey = 'TilesInfoKey';
 
@@ -47,190 +34,7 @@ function readFromStorage() {
 	});
 }
 
-// add tiles to HTML page, for given JSON array (tile-info objects)
-function addMultipleTiles(jsonArray) {
-	logMessage("Add_MultipleTiles: ", "jsonArray=" + jsonArray.length);
-
-	for (i = 0; i < jsonArray.length; i++) {
-		var tileInfo = jsonArray[i];
-		addOneTile(tileInfo.title, tileInfo.url);
-	}
-}
-
-// add a tile to HTML page
-function addOneTile(title, url) {
-	logMessage("Add_OneTile: ", "tileInfo: " + title + "- " + url);
-
-	if (title.length != 0 && url.length != 0) {
-		var tiles_grid = document.getElementById("tiles_grid");
-		var currButtons = tiles_grid.getElementsByClassName('tile_button');
-
-		if (currButtons.length < 30) {
-			var button = document.createElement("button");
-			button.className = "tile_button";
-			button.value = url;
-			button.innerText = title;
-			button.addEventListener('click', process_tileButtonClick);
-
-			tiles_grid.appendChild(button);
-		} else {
-			logMessage("addOneTile: ", "ERROR - Tile limit of 30 reached");
-		}
-	}
-}
-
-// remove one tile from HTML page by matching title
-function removeOneTile(title) {
-	logMessage("Remove_OneTile: ", "title=" + title);
-	if (title.length != 0) {
-		var tiles_grid = document.getElementById("tiles_grid");
-		var currButtons = tiles_grid.getElementsByClassName('tile_button');
-		if (currButtons.length > 0) {
-			for (i = 0; i < currButtons.length; i++) {
-				var button = currButtons[i];
-				if (button.innerText.toUpperCase() === title.toUpperCase()) {
-					logMessage("removeOneTile: ", "FOUND @ " + i);
-					tiles_grid.removeChild(button);
-					break;
-				}
-			}
-		} else {
-			logMessage("removeOneTile: ", "ERROR - There are no tiles on page");
-		}
-	}
-}
-
-// handle tile-button press
-function process_tileButtonClick(event) {
-	var target = event.target || event.srcElement;
-	logMessage("process_buttonClick: ", "target=" + target + ", class="
-			+ target.className);
-
-	chrome.tabs.create({
-		url : target.value,
-		active : false
-	});
-}
-
-// handle ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
-function process_buttonClick(event) {
-	var target = event.target || event.srcElement;
-	logMessage("Button_Click: ", "target=" + target + ", class="
-			+ target.className);
-
-	if (target.className == "button add") {
-		showPopup("add");
-	} else if (target.className == "button remove") {
-		showPopup("remove");
-	} else if (target.className == "button save") {
-		var jsonArray = createTilesJsonArray();
-		writeToStorage(jsonArray);
-	} else if (target.className == "button clear") {
-		var tiles_grid = document.getElementById("tiles_grid");
-		while (tiles_grid.hasChildNodes()) {
-			tiles_grid.removeChild(tiles_grid.lastChild);
-		}
-	} else if (target.className == "button restore") {
-		var tiles_grid = document.getElementById("tiles_grid");
-		while (tiles_grid.hasChildNodes()) {
-			tiles_grid.removeChild(tiles_grid.lastChild);
-		}
-		readInputFile();
-	} else if (target.className == "button cancel") {
-		hidePopup();
-	} else if (target.className == "button addTile") {
-		var inputTitle = document.getElementById("input_title").value;
-		var inputUrl = document.getElementById("input_url").value;
-		addOneTile(inputTitle, inputUrl);
-		hidePopup();
-	} else if (target.className == "button removeTile") {
-		var inputTitle = document.getElementById("input_title").value;
-		removeOneTile(inputTitle);
-		hidePopup();
-	}
-}
-
-// fetch list of tiles and build corresponding JSON array
-function createTilesJsonArray()
-{
-	var jsonArray = [];
-	var currButtons = document.getElementsByClassName("tile_button");
-
-	for (i = 0; i < currButtons.length; i++) {
-		jsonArray.push({
-			"title" : currButtons[i].innerText,
-			"url" : currButtons[i].value
-		});
-	}
-
-	return jsonArray;
-}
-
-// show the user input pop-up
-function showPopup(action)
-{
-	document.getElementById("input_title").value = "";
-	document.getElementById("input_url").value = "";
-	document.getElementById("input_title").style.visibility = 'visible';
-
-	if (action == "add") {
-		// reset text input fields
-		document.getElementById("addTileButton").style.visibility = 'visible';
-		document.getElementById("removeTileButton").style.visibility = 'hidden';
-		document.getElementById("input_url").style.visibility = 'visible';
-	} else if (action == "remove") {
-		document.getElementById("addTileButton").style.visibility = 'hidden';
-		document.getElementById("removeTileButton").style.visibility = 'visible';
-		document.getElementById("input_url").style.visibility = 'hidden';
-	}
-
-	var gridInput = document.getElementById("grid_input");
-	gridInput.style.visibility = 'visible';
-}
-
-// hide the user input pop-up
-function hidePopup()
-{
-	document.getElementById("addTileButton").style.visibility = 'hidden';
-	document.getElementById("removeTileButton").style.visibility = 'hidden';
-	document.getElementById("input_title").style.visibility = 'hidden';
-	document.getElementById("input_url").style.visibility = 'hidden';
-
-	var gridInput = document.getElementById("grid_input");
-	gridInput.style.visibility = 'hidden';
-}
-
-// handle loading of book-marks
-function process_bookmark(bookmarks) {
-	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
-	var select = document.querySelector('.select');
-
-	for (var i = 0; i < bookmarks.length; i++) {
-		var bookmark = bookmarks[i];
-		if (bookmark.url) {
-			var option = document.createElement("option");
-			option.text = bookmark.title;
-			option.value = bookmark.url;
-			select.add(option);
-		}
-
-		if (bookmark.children) {
-			process_bookmark(bookmark.children);
-		}
-	}
-}
-
-// handle selection of book-mark from drop down list
-function process_listChange() {
-	var urlValue = document.querySelector('.select').value;
-	logMessage("BookMark_Selected: ", "URL:" + urlValue)
-	chrome.tabs.create({
-		url : urlValue,
-		active : false
-	});
-}
-
-// read JSON file for tile list and add them to HTML page
+//read JSON file for tile list and add them to HTML page
 function readInputFile() {
 	var fileReadRequest = new XMLHttpRequest();
 	fileReadRequest.open("GET", 'url.json', true);
@@ -247,22 +51,314 @@ function readInputFile() {
 	fileReadRequest.send();
 }
 
-// simple logger
-function logMessage(prefix, postfix) {
-	var date = new Date();
-	var timeStamp = "";
-	timeStamp += prefix;
-	timeStamp += ": ";
-	timeStamp += date.getHours();
-	timeStamp += ":";
-	timeStamp += date.getMinutes();
-	timeStamp += ":";
-	timeStamp += date.getSeconds();
-	timeStamp += " --> ";
-	timeStamp += postfix;
-	timeStamp += "\n";
+// add tiles to HTML page, for given JSON array (tile-info objects)
+function addMultipleTiles(jsonArray) {
+	logMessage("Add_MultipleTiles: ", "jsonArray=" + jsonArray.length);
 
+	for (i = 0; i < jsonArray.length; i++) {
+		var tileInfo = jsonArray[i];
+		addOneTile(tileInfo.title, tileInfo.url);
+	}
+}
+
+function addOneTile(title, url) {
+	logMessage("Add_OneTile: ", "tileInfo: " + title + "- " + url);
+
+	if (title.length != 0 && url.length != 0) {
+		const gridList = document.getElementsByClassName("grid-left");
+
+		const buttonList = gridList[0].getElementsByClassName("tile_button");
+		if (buttonList.length > 30) {
+			logMessage("addOneTile: ", "ERROR - Tile limit of 30 reached");
+			return;
+		}
+
+		var button = document.createElement("button");
+		logMessage("Add_OneTile: ", "button=" + button);
+		button.className = "tile_button";
+		button.value = url;
+		button.innerText = title;
+		button.addEventListener('click', process_tileButtonClick);
+
+		gridList[0].appendChild(button);
+	}
+}
+
+//remove one tile from HTML page by matching title
+function removeOneTile(title) {
+	logMessage("Remove_OneTile: ", "title=" + title);
+	if (title.length != 0) {
+		const gridList = document.getElementsByClassName("grid-left");
+		const buttonList = gridList[0].getElementsByClassName("tile_button");
+		for (i = 0; i < buttonList.length; i++) {
+			var button = buttonList[i];
+			if (button.innerText.toUpperCase() === title.toUpperCase()) {
+				logMessage("removeOneTile: ", "FOUND @ " + i);
+				gridList[0].removeChild(button);
+				break;
+			}
+		}
+	}
+}
+
+//fetch list of tiles and build corresponding JSON array
+function createTilesJsonArray()
+{
+	var jsonArray = [];
+	
+	const gridList = document.getElementsByClassName("grid-left");
+
+	const buttonList = gridList[0].getElementsByClassName("tile_button");
+	for (i = 0; i < buttonList.length; i++) {
+		jsonArray.push({
+			"title" : buttonList[i].innerText,
+			"url" : buttonList[i].value
+		});
+	}
+
+	return jsonArray;
+}
+
+//write tiles list (JSON array) to storage
+function writeToStorage(jsonArray) {
+	var TilesInfoKey = 'TilesInfoKey';
+	var jsonArrayStr = JSON.stringify(jsonArray);
+	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
+
+	chrome.storage.local.set({
+		TilesInfoKey : jsonArrayStr
+	}, function() {
+		logMessage("Write_Storage: ", "set key done");
+	});
+}
+//handle tile-button press
+function process_tileButtonClick(event) {
+	var target = event.target || event.srcElement;
+	logMessage("process_buttonClick: ", "target=" + target + ", class="
+			+ target.className);
+
+	chrome.tabs.create({
+		url : target.value,
+		active : false
+	});
+}
+
+//handle selection of book-mark from drop down list
+function process_listChange() {
+	var urlValue = document.querySelector('.select').value;
+	logMessage("BookMark_Selected: ", "URL:" + urlValue)
+	chrome.tabs.create({
+		url : urlValue,
+		active : false
+	});
+}
+
+//handle loading of book-marks
+function process_bookmark(bookmarks) {
+	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
+	var select = document.querySelector('.select');
+	bookMarkList = bookmarks;
+
+	for (var i = 0; i < bookmarks.length; i++) {
+		var bookmark = bookmarks[i];
+		if (bookmark.url) {
+			var option = document.createElement("option");
+			option.text = bookmark.title;
+			option.value = bookmark.url;
+			select.add(option);
+		}
+
+		if (bookmark.children) {
+			process_bookmark(bookmark.children);
+		}
+	}
+}
+
+//handle ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
+function process_buttonClick(event) {
+	var target = event.target || event.srcElement;
+	logMessage("Button_Click: ", "target=" + target + ", class="
+			+ target.className);
+
+	if (target.className == "button add") {
+		showAddPopup();
+	} else if (target.className == "button remove") {
+		showRemovePopup();
+	} else if (target.className == "button save") {
+		var jsonArray = createTilesJsonArray();
+		writeToStorage(jsonArray);
+	} else if (target.className == "button clear") {
+		const gridList = document.getElementsByClassName("grid-left");
+		while (gridList[0].hasChildNodes()) {
+			gridList[0].removeChild(gridList[0].lastChild);
+		}
+	} else if (target.className == "button restore") {
+		const gridList = document.getElementsByClassName("grid-left");
+		while (gridList[0].hasChildNodes()) {
+			gridList[0].removeChild(gridList[0].lastChild);
+		}
+		readInputFile();
+	} else if (target.className == "button cancel") {
+		showButtonsPopup();
+	} else if (target.className == "button addTile") {
+		var inputTitle = document.getElementById("popup_add_title").value;
+		var inputUrl = document.getElementById("popup_add_url").value;
+		addOneTile(inputTitle, inputUrl);
+		showButtonsPopup();
+	} else if (target.className == "button removeTile") {
+		var inputTitle = document.getElementById("popup_remove_title").value;
+		removeOneTile(inputTitle);
+		showButtonsPopup();
+	}
+}
+
+//show the user input pop-up
+function showButtonsPopup(action)
+{
+	var addButton = document.createElement("button");
+	addButton.innerText = "ADD";
+	addButton.className = "button add";
+	addButton.addEventListener('click', process_buttonClick);
+
+	var delButton = document.createElement("button");
+	delButton.innerText = "DEL";
+	delButton.className = "button remove";
+	delButton.addEventListener('click', process_buttonClick);
+
+	var saveButton = document.createElement("button");
+	saveButton.innerText = "Save";
+	saveButton.className = "button save";
+	saveButton.addEventListener('click', process_buttonClick);
+
+	var clearButton = document.createElement("button");
+	clearButton.innerText = "Clear";
+	clearButton.className = "button clear";
+	clearButton.addEventListener('click', process_buttonClick);
+
+	var restoreButton = document.createElement("button");
+	restoreButton.innerText = "Restore";
+	restoreButton.className = "button restore";
+	restoreButton.addEventListener('click', process_buttonClick);
+
+	var select = document.createElement("select");
+	select.className = "button select";
+	select.id = "add_bookmark";
+	select.addEventListener('change', process_listChange);
+
+	var gridButtons = document.createElement("div");
+	gridButtons.className = "grid-right-buttons";
+	gridButtons.id = "grid-right-buttons";
+
+	gridButtons.appendChild(addButton);
+	gridButtons.appendChild(delButton);
+	gridButtons.appendChild(saveButton);
+	gridButtons.appendChild(clearButton);
+	gridButtons.appendChild(restoreButton);
+	gridButtons.appendChild(select);
+
+	replaceChildren(gridButtons);
+}
+
+//show the user input pop-up
+function showAddPopup(action)
+{
+	var inputTitle = document.createElement("input");
+	inputTitle.className = "input title";
+	inputTitle.type = "text";
+	inputTitle.id = "popup_add_title";
+	inputTitle.placeholder = "Title, e.g. Google";
+
+	var inputUrl = document.createElement("input");
+	inputUrl.className = "input url";
+	inputUrl.type = "text";
+	inputUrl.id = "popup_add_url";
+	inputUrl.placeholder = "Url, e.g. http://www.google.com";
+
+	var cancelButton = document.createElement("button");
+	cancelButton.innerText = "Cancel";
+	cancelButton.className = "button cancel";
+	cancelButton.id = "cancelTileButton";
+	cancelButton.addEventListener('click', process_buttonClick);
+
+	var addButton = document.createElement("button");
+	addButton.innerText = "Add Tile";
+	addButton.className = "button addTile";
+	addButton.id = "addTileButton";
+	addButton.addEventListener('click', process_buttonClick);
+
+	var gridAdd = document.createElement("div");
+	gridAdd.className = "grid_popup-add";
+	gridAdd.id = "grid_popup-add";
+
+	gridAdd.appendChild(inputTitle);
+	gridAdd.appendChild(inputUrl);
+	gridAdd.appendChild(cancelButton);
+	gridAdd.appendChild(addButton);
+
+	replaceChildren(gridAdd);
+}
+
+//show the user input pop-up
+function showRemovePopup(action)
+{
+	var inputTitle = document.createElement("input");
+	inputTitle.className = "input title";
+	inputTitle.type = "text";
+	inputTitle.id = "popup_remove_title";
+	inputTitle.placeholder = "Title, e.g. Google";
+
+	var cancelButton = document.createElement("button");
+	cancelButton.innerText = "Cancel";
+	cancelButton.className = "button cancel";
+	cancelButton.id = "cancelTileButton";
+	cancelButton.addEventListener('click', process_buttonClick);
+
+	var removeButton = document.createElement("button");
+	removeButton.innerText = "Remove Tile";
+	removeButton.className = "button removeTile";
+	removeButton.id = "removeTileButton";
+	removeButton.addEventListener('click', process_buttonClick);
+
+	var gridRemove = document.createElement("div");
+	gridRemove.className = "grid_popup-remove";
+	gridRemove.id = "grid_popup-remove";
+
+	gridRemove.appendChild(inputTitle);
+	gridRemove.appendChild(cancelButton);
+	gridRemove.appendChild(removeButton);
+
+	replaceChildren(gridRemove);
+}
+
+function replaceChildren(newChild)
+{
+	const gridList = document.getElementsByClassName("grid-right");
+
+	while (gridList[0].hasChildNodes()) {
+		gridList[0].removeChild(gridList[0].lastChild);
+	}
+
+	gridList[0].appendChild(newChild);
+}
+
+//simple logger
+function logMessage(prefix, postfix) {
 	var console = document.getElementById("console")
-	console.value += timeStamp;
-	console.focus();
+	if (console != null) {
+		var date = new Date();
+		var timeStamp = "";
+		timeStamp += prefix;
+		timeStamp += ": ";
+		timeStamp += date.getHours();
+		timeStamp += ":";
+		timeStamp += date.getMinutes();
+		timeStamp += ":";
+		timeStamp += date.getSeconds();
+		timeStamp += " --> ";
+		timeStamp += postfix;
+		timeStamp += "\n";
+
+		console.value += timeStamp;
+		console.focus();
+	}
 }
