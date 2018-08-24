@@ -12,10 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
 	
+	document.getElementById("console-button").addEventListener('click', process_buttonClick);
+	
 	logMessage("INIT: ", "End");
 });
 
-var bookMarkList;
+var bookMarkList = [];
 
 //read storage for tile list and add them to HTML page
 function readFromStorage() {
@@ -131,6 +133,22 @@ function writeToStorage(jsonArray) {
 		logMessage("Write_Storage: ", "set key done");
 	});
 }
+
+//handle loading of book-marks
+function addBookmark(select) {
+	logMessage("BookMark_Add: ", "bookmarks:" + bookMarkList.length)
+
+	for (var i = 0; i < bookMarkList.length; i++) {
+		var bookmark = bookMarkList[i];
+		if (bookmark.url) {
+			var option = document.createElement("option");
+			option.text = bookmark.title;
+			option.value = bookmark.url;
+			select.add(option);
+		}
+	}
+}
+
 //handle tile-button press
 function process_tileButtonClick(event) {
 	var target = event.target || event.srcElement;
@@ -157,11 +175,11 @@ function process_listChange() {
 function process_bookmark(bookmarks) {
 	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
 	var select = document.querySelector('.select');
-	bookMarkList = bookmarks;
 
 	for (var i = 0; i < bookmarks.length; i++) {
 		var bookmark = bookmarks[i];
 		if (bookmark.url) {
+			bookMarkList.push(bookmark);
 			var option = document.createElement("option");
 			option.text = bookmark.title;
 			option.value = bookmark.url;
@@ -209,10 +227,17 @@ function process_buttonClick(event) {
 		var inputTitle = document.getElementById("popup_remove_title").value;
 		removeOneTile(inputTitle);
 		showButtonsPopup();
+	} else if (target.className == "console-button") {
+		var console = document.getElementById("console-text")
+		if (console.style.display === "block") {
+			console.style.display = "none";
+		} else {
+			console.style.display = "block";
+		}
 	}
 }
 
-//show the user input pop-up
+// show the user input pop-up
 function showButtonsPopup(action)
 {
 	var addButton = document.createElement("button");
@@ -244,6 +269,7 @@ function showButtonsPopup(action)
 	select.className = "button select";
 	select.id = "add_bookmark";
 	select.addEventListener('change', process_listChange);
+	addBookmark(select);
 
 	var gridButtons = document.createElement("div");
 	gridButtons.className = "grid-right-buttons";
@@ -343,18 +369,18 @@ function replaceChildren(newChild)
 
 //simple logger
 function logMessage(prefix, postfix) {
-	var console = document.getElementById("console")
+	var console = document.getElementById("console-text")
 	if (console != null) {
 		var date = new Date();
 		var timeStamp = "";
-		timeStamp += prefix;
-		timeStamp += ": ";
 		timeStamp += date.getHours();
 		timeStamp += ":";
 		timeStamp += date.getMinutes();
 		timeStamp += ":";
 		timeStamp += date.getSeconds();
 		timeStamp += " --> ";
+		timeStamp += prefix;
+		timeStamp += ": ";
 		timeStamp += postfix;
 		timeStamp += "\n";
 

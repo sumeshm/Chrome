@@ -1,3 +1,4 @@
+
 /* -------------------- header and footer -------------------- */
 .header {
 	font-size: 250%;
@@ -8,21 +9,36 @@
 }
 
 .footer {
-	font-size: 130%;
 	padding: 1%;
-	text-align: center;
-	width: 100%;
 	position: absolute;
 	bottom: 0px;
 	font-family: verdana;
-	color: orange
+	width: 1580px;
+}
+
+.console-button {
+	background-color: #EAECEE;
+	font-size: 130%;
+	text-align: center;
+	opacity: .6;
+    cursor: pointer;
+	padding: 1%;
+}
+
+.console-text {
+	display: none;
+	resize: none;
+}
+
+.console-text:focus {
+    outline: none !important;
 }
 
 /* -------------------- main grid container -------------------- */
 .grid-main {
 	display: grid;
 	grid-template-columns: 80% 20%;
-	padding: 1em 1em;
+	padding: 1em 2em;
 }
 
 /* -------------------- left grid with tiles -------------------- */
@@ -34,6 +50,7 @@
 }
 
 .tile_button {
+	cursor: pointer;
 	background-color: #EAECEE;
 	text-align: center;
 	font-size: 150%;
@@ -71,16 +88,19 @@
 	padding: 1em 1em;
 	border-radius: 5px;
 	border: 2px solid black;
-	height: 15em;
+	height: 13em;
 }
 
 .button {
+	cursor: pointer;
 	color: grey;
 	font-size: 100%;
 	text-align: center;
 	padding: 1em 1em;
 	border-radius: 5px;
 	border: 1px solid grey;
+	height: 80%;
+	width: 100%;
 }
 
 .button :hover {
@@ -90,11 +110,13 @@
 .add {
 	grid-area: add;
 	padding: 1em 0em;
+	height: 100%;
 }
 
 .remove {
 	grid-area: remove;
 	padding: 1em 0em;
+	height: 100%;
 }
 
 .save {
@@ -114,7 +136,6 @@
 
 .select {
 	grid-area: select;
-	width: 100%;
 }
 
 /* -------------------- right grid add-pop-up -------------------- */
