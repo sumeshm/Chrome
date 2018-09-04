@@ -1,9 +1,5 @@
 [
 	{
-		"title": "Google",
-		"url": "https://www.google.co.in"
-	},
-	{
 		"title": "Dev-Portal",
 		"url": "https://devportal.intuit.com/a1/index.html?legacy#/main/my-accounts"
 	},
@@ -24,20 +20,24 @@
 		"url": "https://wiki.intuit.com"
 	},
 	{
+		"title": "Google",
+		"url": "https://www.google.co.in"
+	},
+	{
 		"title": "Alti-Coral",
 		"url": "https://o365altimetrik.sharepoint.com/Pages/Default.aspx"
 	},
 	{
-		"title": "Alti-Mail",
-		"url": "https://outlook.office365.com/owa/?realm=altimetrik.com&exsvurl=1&ll-cc=2057&modurl=0"
+		"title": "Alti-Leave",
+		"url": "https://ebfz.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_afrLoop=4924040914946095&_adf.ctrl-state=10rhv2oz0s_19"
 	},
 	{
 		"title": "Alti-Time",
 		"url": "https://aep.altimetrik.com/GlobalTimesheet"
 	},
 	{
-		"title": "Alti-Leave",
-		"url": "https://ebfz.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_afrLoop=4924040914946095&_adf.ctrl-state=10rhv2oz0s_19"
+		"title": "Alti-Mail",
+		"url": "https://outlook.office365.com/owa/?realm=altimetrik.com&exsvurl=1&ll-cc=2057&modurl=0"
 	},
 	{
 		"title": "Yahoo",
@@ -52,8 +52,8 @@
 		"url": "http://www.amazon.in"
 	},
 	{
-		"title": "Team-BHP",
-		"url": "https://www.team-bhp.com/forum"
+		"title": "Prime",
+		"url": "https://www.primevideo.com"
 	},
 	{
 		"title": "Bescom",
@@ -64,7 +64,19 @@
 		"url": "https://www.airtel.in/s/selfcare"
 	},
 	{
-		"title": "Prime",
-		"url": "https://www.primevideo.com"
+		"title": "PayTM",
+		"url": "https://paytm.com/"
+	},
+	{
+		"title": "Team-BHP",
+		"url": "https://www.team-bhp.com/forum"
+	},
+	{
+		"title": "ICICI",
+		"url": "https://www.icicibank.com/safe-online-banking/safe-online-banking.page?"
+	},
+	{
+		"title": "Citi",
+		"url": "https://www.online.citibank.co.in/"
 	}
 ]

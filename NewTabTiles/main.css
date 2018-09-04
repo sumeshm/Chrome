@@ -3,29 +3,35 @@
 .header {
 	font-size: 250%;
 	padding: 1%;
-	text-align: center;
 	font-family: verdana;
 	color: orange
 }
 
 .footer {
-	padding: 1%;
-	position: absolute;
-	bottom: 0px;
+	overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
 	font-family: verdana;
-	width: 1580px;
+ 	width: 95%;
 }
 
-.console-button {
-	background-color: #EAECEE;
-	font-size: 130%;
+.footer_button {
+	float: left;
+    margin: 2px;
+	background-color: #4CAF50;
+	color: white;
+	font-size: 110%;
 	text-align: center;
-	opacity: .6;
-    cursor: pointer;
-	padding: 1%;
+	padding: 1em 1em;
+	border-radius: 5px;
+	border: 1px solid grey;
+	cursor: pointer;
 }
 
 .console-text {
+	width: 99%;
+	height: 15em;
 	display: none;
 	resize: none;
 }

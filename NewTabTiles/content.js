@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
 	
-	document.getElementById("console-button").addEventListener('click', process_buttonClick);
-	
+	const consoleButtonList = document.getElementsByClassName("footer_button");
+	for (i = 0; i < consoleButtonList.length; i++) {
+		consoleButtonList[i].addEventListener('click', process_footerButtonClick);
+	}
+
 	logMessage("INIT: ", "End");
 });
 
@@ -36,6 +39,19 @@ function readFromStorage() {
 	});
 }
 
+//write tiles list (JSON array) to storage
+function writeToStorage(jsonArray) {
+	var TilesInfoKey = 'TilesInfoKey';
+	var jsonArrayStr = JSON.stringify(jsonArray);
+	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
+
+	chrome.storage.local.set({
+		TilesInfoKey : jsonArrayStr
+	}, function() {
+		logMessage("Write_Storage: ", "set key done");
+	});
+}
+
 //read JSON file for tile list and add them to HTML page
 function readInputFile() {
 	var fileReadRequest = new XMLHttpRequest();
@@ -51,6 +67,14 @@ function readInputFile() {
 	}
 
 	fileReadRequest.send();
+}
+
+//read JSON file for tile list and add them to HTML page
+function writeToInputFile(jsonArray) {
+	var jsonArrayStr = JSON.stringify(jsonArray);
+	logMessage("Write_file: ", "tileInfoStr:");
+	logMessage("", jsonArrayStr);
+	// todo: write to a file
 }
 
 // add tiles to HTML page, for given JSON array (tile-info objects)
@@ -121,19 +145,6 @@ function createTilesJsonArray()
 	return jsonArray;
 }
 
-//write tiles list (JSON array) to storage
-function writeToStorage(jsonArray) {
-	var TilesInfoKey = 'TilesInfoKey';
-	var jsonArrayStr = JSON.stringify(jsonArray);
-	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
-
-	chrome.storage.local.set({
-		TilesInfoKey : jsonArrayStr
-	}, function() {
-		logMessage("Write_Storage: ", "set key done");
-	});
-}
-
 //handle loading of book-marks
 function addBookmark(select) {
 	logMessage("BookMark_Add: ", "bookmarks:" + bookMarkList.length)
@@ -152,7 +163,7 @@ function addBookmark(select) {
 //handle tile-button press
 function process_tileButtonClick(event) {
 	var target = event.target || event.srcElement;
-	logMessage("process_buttonClick: ", "target=" + target + ", class="
+	logMessage("process_tileButtonClick: ", "target=" + target + ", class="
 			+ target.className);
 
 	chrome.tabs.create({
@@ -227,13 +238,26 @@ function process_buttonClick(event) {
 		var inputTitle = document.getElementById("popup_remove_title").value;
 		removeOneTile(inputTitle);
 		showButtonsPopup();
-	} else if (target.className == "console-button") {
-		var console = document.getElementById("console-text")
-		if (console.style.display === "block") {
-			console.style.display = "none";
+	}
+}
+
+//handle CONSOLE, EXPORT
+function process_footerButtonClick(event) {
+	var target = event.target || event.srcElement;
+	logMessage("Footer_Button_Click: ", "target=" + target + ", class="
+			+ target.className + ", id=" + target.id);
+
+	if (target.id == "console-button") {
+		var consoleTextArea = document.getElementById("console-text")
+		if (consoleTextArea.style.display === "block") {
+			consoleTextArea.style.display = "none";
 		} else {
-			console.style.display = "block";
+			consoleTextArea.style.display = "block";
 		}
+		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
+	} else if (target.id == "export-button") {
+		var jsonArray = createTilesJsonArray();
+		writeToInputFile(jsonArray);
 	}
 }
 
@@ -369,8 +393,8 @@ function replaceChildren(newChild)
 
 //simple logger
 function logMessage(prefix, postfix) {
-	var console = document.getElementById("console-text")
-	if (console != null) {
+	var consoleTextArea = document.getElementById("console-text")
+	if (consoleTextArea != null) {
 		var date = new Date();
 		var timeStamp = "";
 		timeStamp += date.getHours();
@@ -384,7 +408,7 @@ function logMessage(prefix, postfix) {
 		timeStamp += postfix;
 		timeStamp += "\n";
 
-		console.value += timeStamp;
-		console.focus();
+		consoleTextArea.value += timeStamp;
+		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
 	}
 }

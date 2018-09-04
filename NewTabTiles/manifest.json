@@ -39,6 +39,6 @@
 		}
 	],
 	"web_accessible_resources": [
-		"url.json"
+		"*.json"
 	]
 }
