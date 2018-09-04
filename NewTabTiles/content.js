@@ -106,6 +106,31 @@ function addOneTile(title, url) {
 		button.innerText = title;
 		button.addEventListener('click', process_tileButtonClick);
 
+		// add icon
+		var trimURL = url;
+
+		var index1 = trimURL.indexOf('?');
+		if (index1 > 1) {
+			// discard '?' onwards
+			trimURL = trimURL.substring(0, index1 - 1);
+		}
+
+		var index2 = trimURL.indexOf('/', 8);
+		if (index2 > 1) {
+			// discard '/' onwards
+			trimURL = trimURL.substring(0, index2);
+		}
+
+		if (trimURL.length == 0)
+		{
+			trimURL = url;
+		}
+
+		button.style.background = "white url('" + trimURL + "/favicon.ico" + "')";
+		button.style.backgroundRepeat = "no-repeat";
+		button.style.backgroundPosition = "95% 50%";
+		button.style.backgroundSize = "30px";
+		
 		gridList[0].appendChild(button);
 	}
 }
