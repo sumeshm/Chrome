@@ -1,10 +1,35 @@
 
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:900);
+@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+
+
 /* -------------------- header and footer -------------------- */
 .header {
-	font-size: 250%;
+	font-size: 350%;
 	padding: 1%;
 	font-family: verdana;
+	text-align: center;
+	font-style: italic;
 	color: orange
+}
+
+.headerChrome {
+ 	background-image: -webkit-linear-gradient(#378DBC 0%, #B6E8F1 46%, #ffffff 50%, #32120E 54%, #FFC488 58%, #582C11 90%, #EC9B4E 100%);
+ 	-webkit-background-clip: text;
+ 	-webkit-text-fill-color: transparent;
+ 	-webkit-text-stroke: 6px #f5f5f5;
+	font-size: 90px;
+	font-family: 'Titillium Web', sans-serif;
+	font-style: italic;
+	text-align: center;
+}
+
+.word {
+	font-family: "Titillium";
+	font-size:6em;
+	color:orange;
+	text-align: center;
+	font-style: italic;
 }
 
 .footer {
@@ -19,13 +44,12 @@
 .footer_button {
 	float: left;
     margin: 2px;
-	background-color: #4CAF50;
+	background-color: orange;
 	color: white;
 	font-size: 110%;
 	text-align: center;
 	padding: 1em 1em;
 	border-radius: 5px;
-	border: 1px solid grey;
 	cursor: pointer;
 }
 
@@ -50,7 +74,7 @@
 /* -------------------- left grid with tiles -------------------- */
 .grid-left {
 	display: grid;
-	grid-template-columns: repeat(6, 14em);
+	grid-template-columns: 14% 14% 14% 14% 14% 14%;
 	grid-gap: 3em 3em;
 	padding: 1em 1em;
 }
@@ -62,11 +86,13 @@
 	font-size: 150%;
 	padding: 1em 0em 1em 1em;
   	border-radius: 5px;
-	border: 1px solid black;
+	border: 1px solid grey;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.3);
+    transition: 0.2s;
 }
 
 .tile_button:hover {
-	box-shadow: 5px 5px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
 /* -------------------- right grid -------------------- */
@@ -92,8 +118,14 @@
 	background-color: #EAECEE;
 	padding: 1em 1em;
 	border-radius: 5px;
-	border: 2px solid black;
+	border: 1px solid grey;
 	height: 13em;
+    transition: 0.3s;
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
+}
+
+.grid-right-buttons:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
 .button {
