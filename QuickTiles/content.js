@@ -28,7 +28,8 @@ function readFromStorage() {
 
 	chrome.storage.local.get([ TilesInfoKey ], function(jsonArrayStr) {
 		if (!jsonArrayStr.TilesInfoKey) {
-			logMessage("Read_Storage: ", "get key.TilesInfoKey=UNDEFINED");
+			logMessage("Read_Storage: ", "get key.TilesInfoKey=UNDEFINED, restore from file");
+			readInputFile();
 		} else {
 			var jsonArray = JSON.parse(jsonArrayStr.TilesInfoKey);
 			logMessage("Read_Storage: ", "jsonArray.length="
@@ -63,6 +64,8 @@ function readInputFile() {
 			logMessage("Read_File: ", "jsonArray=" + jsonArray.length);
 
 			addMultipleTiles(jsonArray);
+		} else {
+			logMessage("Read_File: ERROR - ", "failed to load");
 		}
 	}
 
@@ -126,10 +129,10 @@ function addOneTile(title, url) {
 			trimURL = url;
 		}
 
-		button.style.background = "white url('" + trimURL + "/favicon.ico" + "')";
+		button.style.background = "transparent url('" + trimURL + "/favicon.ico" + "')";
 		button.style.backgroundRepeat = "no-repeat";
 		button.style.backgroundPosition = "95% 50%";
-		button.style.backgroundSize = "30px";
+		button.style.backgroundSize = "35px";
 		
 		gridList[0].appendChild(button);
 	}

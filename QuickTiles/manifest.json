@@ -1,8 +1,8 @@
 {
-	"name": "NewTabTiles",
+	"name": "QuickTiles",
 	"manifest_version": 2,
 	"version": "1.0",
-	"description": "New Tab Page with Tiles",
+	"description": "Quick Tiles for New Tab",
 	"chrome_url_overrides": {
 		"newtab": "NewTab.html"
 	},

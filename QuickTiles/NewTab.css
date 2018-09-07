@@ -3,6 +3,13 @@
 @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
 
 
+/* ----------------------- background ------------------------ */
+body {
+ 	background-image: url("images/background8.jpeg");
+    background-size: cover;
+	margin: 0;
+}
+
 /* -------------------- header and footer -------------------- */
 .header {
 	font-size: 350%;
@@ -10,26 +17,7 @@
 	font-family: verdana;
 	text-align: center;
 	font-style: italic;
-	color: orange
-}
-
-.headerChrome {
- 	background-image: -webkit-linear-gradient(#378DBC 0%, #B6E8F1 46%, #ffffff 50%, #32120E 54%, #FFC488 58%, #582C11 90%, #EC9B4E 100%);
- 	-webkit-background-clip: text;
- 	-webkit-text-fill-color: transparent;
- 	-webkit-text-stroke: 6px #f5f5f5;
-	font-size: 90px;
-	font-family: 'Titillium Web', sans-serif;
-	font-style: italic;
-	text-align: center;
-}
-
-.word {
-	font-family: "Titillium";
-	font-size:6em;
-	color:orange;
-	text-align: center;
-	font-style: italic;
+	color: white;
 }
 
 .footer {
@@ -81,13 +69,13 @@
 
 .tile_button {
 	cursor: pointer;
-	color: grey;
+	color: white;
 	text-align: left;
 	font-size: 150%;
 	padding: 1em 0em 1em 1em;
   	border-radius: 5px;
-	border: 1px solid grey;
-    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.3);
+	border: 1px solid white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
     transition: 0.2s;
 }
 
@@ -115,13 +103,10 @@
 		"popup popup popup";
 	grid-gap: 1em 1em;
 	text-align: center;
-	background-color: #EAECEE;
+	background-color: transparent;
 	padding: 1em 1em;
-	border-radius: 5px;
-	border: 1px solid grey;
 	height: 13em;
     transition: 0.3s;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
 }
 
 .grid-right-buttons:hover {
@@ -130,12 +115,13 @@
 
 .button {
 	cursor: pointer;
-	color: grey;
+	color: white;
+	background-color: transparent;
 	font-size: 100%;
 	text-align: center;
 	padding: 1em 1em;
 	border-radius: 5px;
-	border: 1px solid grey;
+	border: 1px solid white;
 	height: 80%;
 	width: 100%;
 }
@@ -184,38 +170,40 @@
 		"title title title"
 		"url url url"
 		"cancel . addTile";
-	background-color: #EAECEE;
+	color: white;
+	background-color: transparent;
 	grid-gap: 1em;
 	text-align: center;
-	border-radius: 5px;
-	border: 1px solid grey;
 	padding: 1em 1em;
-	border: 2px solid black;
 	height: 12em;
+}
+
+.grid_popup-add:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
 .title {
 	grid-area: title;
-	background-color: white;
-	border: 1px solid grey;
+	color: white;
+	background-color: transparent;
+	border: 1px solid white;
 	padding: 1em 1em;
 }
 
 .url {
 	grid-area: url;
-	background-color: white;
-	border: 1px solid grey;
+	color: white;
+	background-color: transparent;
+	border: 1px solid white;
 	padding: 1em 1em;
 }
 
 .cancel {
 	grid-area: cancel;
-	background-color: white;
 }
 
 .addTile {
 	grid-area: addTile;
-	background-color: white;
 }
 
 /* -------------------- right grid remove-pop-up -------------------- */
@@ -226,16 +214,18 @@
 	grid-template-areas:
 		"title title title"
 		"cancel . removeTile";
-	background-color: #EAECEE;
+	color: white;
+	background-color: transparent;
 	grid-gap: 1em;
 	text-align: center;
 	padding: 1em 1em;
-	border-radius: 5px;
-	border: 2px solid black;
 	height: 9em;
+}
+
+.grid_popup-remove:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
 .removeTile {
 	grid-area: removeTile;
-	background-color: white;
 }
