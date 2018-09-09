@@ -6,16 +6,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	// populate tiles from cache
 	readFromStorage();
 
-	// create the user action buttons
-	showButtonsPopup();
-
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
-	
-	const consoleButtonList = document.getElementsByClassName("footer_button");
-	for (i = 0; i < consoleButtonList.length; i++) {
-		consoleButtonList[i].addEventListener('click', process_footerButtonClick);
+
+	const optionsButtonList = document.getElementsByClassName("opbutton");
+	for (i = 0; i < optionsButtonList.length; i++) {
+		optionsButtonList[i].addEventListener('click', process_optionsButtonClick);
 	}
+
+	var dropdownButton = document.getElementById("drop-button");
+	dropdownButton.addEventListener('mouseenter', process_mouseOver);
+
+	document.body.addEventListener('click', process_bodyClick, false); 
 
 	logMessage("INIT: ", "End");
 });
@@ -237,104 +239,74 @@ function process_buttonClick(event) {
 	logMessage("Button_Click: ", "target=" + target + ", class="
 			+ target.className);
 
-	if (target.className == "button add") {
+	if (target.className == "button cancel") {
+		removeChildren();
+	} else if (target.className == "button addTile") {
+		var inputTitle = document.getElementById("popup_add_title").value;
+		var inputUrl = document.getElementById("popup_add_url").value;
+		addOneTile(inputTitle, inputUrl);
+		removeChildren();
+	} else if (target.className == "button removeTile") {
+		var inputTitle = document.getElementById("popup_remove_title").value;
+		removeOneTile(inputTitle);
+		removeChildren();
+	}
+}
+
+// handle ADD, REMOVE, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
+function process_optionsButtonClick(event) {
+	var target = event.target || event.srcElement;
+	logMessage("HEADER_Button_Click: ", "target=" + target + ", class="
+			+ target.className + ", id=" + target.id);
+
+	var dropdownContent = document.getElementById("dropdown-content");
+	dropdownContent.style.display = "none";
+
+	if (target.id == "add") {
 		showAddPopup();
-	} else if (target.className == "button remove") {
+	} else if (target.id == "remove") {
 		showRemovePopup();
-	} else if (target.className == "button save") {
+	} else if (target.id == "save") {
 		var jsonArray = createTilesJsonArray();
 		writeToStorage(jsonArray);
-	} else if (target.className == "button clear") {
+	} else if (target.id == "clear") {
 		const gridList = document.getElementsByClassName("grid-left");
 		while (gridList[0].hasChildNodes()) {
 			gridList[0].removeChild(gridList[0].lastChild);
 		}
-	} else if (target.className == "button restore") {
+	} else if (target.id == "restore") {
 		const gridList = document.getElementsByClassName("grid-left");
 		while (gridList[0].hasChildNodes()) {
 			gridList[0].removeChild(gridList[0].lastChild);
 		}
 		readInputFile();
-	} else if (target.className == "button cancel") {
-		showButtonsPopup();
-	} else if (target.className == "button addTile") {
-		var inputTitle = document.getElementById("popup_add_title").value;
-		var inputUrl = document.getElementById("popup_add_url").value;
-		addOneTile(inputTitle, inputUrl);
-		showButtonsPopup();
-	} else if (target.className == "button removeTile") {
-		var inputTitle = document.getElementById("popup_remove_title").value;
-		removeOneTile(inputTitle);
-		showButtonsPopup();
-	}
-}
-
-//handle CONSOLE, EXPORT
-function process_footerButtonClick(event) {
-	var target = event.target || event.srcElement;
-	logMessage("Footer_Button_Click: ", "target=" + target + ", class="
-			+ target.className + ", id=" + target.id);
-
-	if (target.id == "console-button") {
-		var consoleTextArea = document.getElementById("console-text")
-		if (consoleTextArea.style.display === "block") {
-			consoleTextArea.style.display = "none";
-		} else {
-			consoleTextArea.style.display = "block";
-		}
-		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
-	} else if (target.id == "export-button") {
+	} else if (target.id == "console") {
+			var consoleTextArea = document.getElementById("console-text")
+			if (consoleTextArea.style.display === "block") {
+				consoleTextArea.style.display = "none";
+			} else {
+				consoleTextArea.style.display = "block";
+			}
+			consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
+	} else if (target.id == "export") {
 		var jsonArray = createTilesJsonArray();
 		writeToInputFile(jsonArray);
 	}
 }
 
-// show the user input pop-up
-function showButtonsPopup(action)
-{
-	var addButton = document.createElement("button");
-	addButton.innerText = "ADD";
-	addButton.className = "button add";
-	addButton.addEventListener('click', process_buttonClick);
+function process_mouseOver(event) {
+	var dropdownContent = document.getElementById("dropdown-content");
+	dropdownContent.style.display = "block";
+	removeChildren();
+}
 
-	var delButton = document.createElement("button");
-	delButton.innerText = "DEL";
-	delButton.className = "button remove";
-	delButton.addEventListener('click', process_buttonClick);
+function process_bodyClick(event) {
+	var target = event.target || event.srcElement;
+	logMessage("BODY_Click: ", "target=" + target + ", class="
+			+ target.className + ", id=" + target.id);
 
-	var saveButton = document.createElement("button");
-	saveButton.innerText = "Save";
-	saveButton.className = "button save";
-	saveButton.addEventListener('click', process_buttonClick);
-
-	var clearButton = document.createElement("button");
-	clearButton.innerText = "Clear";
-	clearButton.className = "button clear";
-	clearButton.addEventListener('click', process_buttonClick);
-
-	var restoreButton = document.createElement("button");
-	restoreButton.innerText = "Restore";
-	restoreButton.className = "button restore";
-	restoreButton.addEventListener('click', process_buttonClick);
-
-	var select = document.createElement("select");
-	select.className = "button select";
-	select.id = "add_bookmark";
-	select.addEventListener('change', process_listChange);
-	addBookmark(select);
-
-	var gridButtons = document.createElement("div");
-	gridButtons.className = "grid-right-buttons";
-	gridButtons.id = "grid-right-buttons";
-
-	gridButtons.appendChild(addButton);
-	gridButtons.appendChild(delButton);
-	gridButtons.appendChild(saveButton);
-	gridButtons.appendChild(clearButton);
-	gridButtons.appendChild(restoreButton);
-	gridButtons.appendChild(select);
-
-	replaceChildren(gridButtons);
+	var dropdownContent = document.getElementById("dropdown-content");
+	dropdownContent.style.display = "none";
 }
 
 //show the user input pop-up
@@ -406,6 +378,15 @@ function showRemovePopup(action)
 	gridRemove.appendChild(removeButton);
 
 	replaceChildren(gridRemove);
+}
+
+function removeChildren()
+{
+	const gridList = document.getElementsByClassName("grid-right");
+
+	while (gridList[0].hasChildNodes()) {
+		gridList[0].removeChild(gridList[0].lastChild);
+	}
 }
 
 function replaceChildren(newChild)

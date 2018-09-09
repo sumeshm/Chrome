@@ -3,6 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
 
 
+
 /* ----------------------- background ------------------------ */
 body {
  	background-image: url("images/background8.jpeg");
@@ -10,7 +11,7 @@ body {
 	margin: 0;
 }
 
-/* -------------------- header and footer -------------------- */
+/* ------------------------- header  ------------------------ */
 .header {
 	font-size: 350%;
 	padding: 1%;
@@ -19,6 +20,44 @@ body {
 	font-style: italic;
 	color: white;
 }
+
+.drop-down {
+	padding: 1.5em 2em;
+	float: right;
+}
+
+.drop-down .drop-button {
+	padding: 1em 1em;
+	border: 1px solid white;
+	border-radius: 5px;
+	background-color: transparent;
+ 	color: white;
+	cursor: pointer;
+	font-size: 110%;
+}
+
+.drop-down .dropdown-content {
+	display: none;
+    position: absolute;
+	color: black;
+}
+
+.dropdown-content .opbutton {
+	cursor: pointer;
+	background-color: white;
+	padding: 1em 2em;
+	border-radius: 20px;
+    width: 90%;
+    text-align: left;
+	font-size: 100%;
+}
+
+.opbutton:hover {background-color: #ddd;}
+
+.drop-down:hover .dropdown-content {display: block;}
+
+
+/* ------------------------- footer ------------------------- */
 
 .footer {
 	overflow: hidden;
@@ -32,12 +71,14 @@ body {
 .footer_button {
 	float: left;
     margin: 2px;
-	background-color: orange;
 	color: white;
 	font-size: 110%;
 	text-align: center;
 	padding: 1em 1em;
+	border: 1px solid white;
 	border-radius: 5px;
+	background-color: transparent;
+ 	color: white;
 	cursor: pointer;
 }
 
@@ -46,6 +87,10 @@ body {
 	height: 15em;
 	display: none;
 	resize: none;
+	background-color: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+ 	color: white;
 }
 
 .console-text:focus {
