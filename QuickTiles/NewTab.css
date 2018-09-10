@@ -27,28 +27,27 @@ h1 {
 	text-align: center;
 	font-style: italic;
 	color: white;
-    margin-left: 20%;
+    margin-left: 17%;
     margin-right: 0;
 }
 
 nav {
     float: right;
-    width: 6%;
+    width: 5%;
     color: black;
 	padding: 1em 1em;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-right: 2%;
 }
 
 .optionsButton {
+	background: url('images/actionOptions.png') no-repeat transparent center;
     float: right;
-	padding: 1em 1em;
-	border: 1px solid white;
-	border-radius: 20px;
-	background-color: transparent;
+	padding: 3em 3em;
+	border: none;
  	color: white;
 	cursor: pointer;
-	font-size: 100%;
+	backgroundSize: 5%;
 }
 
 .actionContainer {
@@ -59,19 +58,42 @@ nav {
 
 .actionButton {
 	cursor: pointer;
-	color: white;
-	background-color: transparent;
-	padding: 1em 0em;
-	border-radius: 20px;
-    width: 80%;
-    text-align: center;
-	font-size: 100%;
+	padding: 2em 1em;
+    width: 60%;
+    border: none;
 }
 
-.actionButton:hover 		{ background-color: #ddd; }
+.actionButton:hover 		{ border: 2px solid white; }
 nav:hover .actionContainer 	{ display: block; } 
 nav:hover .optionsButton 	{ display: none }
 
+.actionAdd {
+	background: url('images/actionAdd.png') no-repeat transparent center;
+}
+
+.actionRemove {
+  	background: url('images/actionRemove.png') no-repeat transparent center;
+}
+
+.actionSave {
+  	background: url('images/actionSave.png') no-repeat transparent center;
+}
+
+.actionClear {
+  	background: url('images/actionClear.png') no-repeat transparent center;
+}
+
+.actionRestore {
+  	background: url('images/actionRestore.png') no-repeat transparent center;
+}
+
+.actionExport {
+  	background: url('images/actionExport.png') no-repeat transparent center;
+}
+
+.actionConsole {
+  	background: url('images/actionConsole.png') no-repeat transparent center;
+}
 
 section:after {
     content: "";
@@ -160,7 +182,7 @@ section:after {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
-/* -------------------- right grid -------------------- */
+/* -------------------- grid pop-up -------------------- */
 .gridPopup {
 	display: inline-grid;
 	grid-template-columns: 40% 20% 40%;
@@ -194,6 +216,7 @@ section:after {
 	background-color: transparent;
 	border: 1px solid white;
 	padding: 1em 1em;
+	font-size: 110%;
 }
 
 .url {
@@ -202,21 +225,27 @@ section:after {
 	background-color: transparent;
 	border: 1px solid white;
 	padding: 1em 1em;
+	font-size: 110%;
 }
 
-.cancel {
+.formActionButton {
+	cursor: pointer;
+	background-color: transparent;
+	padding: 1em 1em;
+	border: none;
+}
+
+.actionCancel {
 	grid-area: cancel;
+  	background: url('images/actionCancel.png') no-repeat transparent center;
 }
 
-.addTile {
-	grid-area: addTile;
+.actionSubmit {
+	grid-area: submit;
+  	background: url('images/actionSubmit.png') no-repeat transparent center;
 }
 
-.removeTile {
-	grid-area: removeTile;
-}
-
-/* -------------------- right grid add-pop-up -------------------- */
+/* -------------------- add pop-up -------------------- */
 .grid_popup-add {
 	grid-area: popup;
 	display: grid;
@@ -225,7 +254,7 @@ section:after {
 	grid-template-areas:
 		"title title title"
 		"url url url"
-		"cancel . addTile";
+		"cancel . submit";
 	color: white;
 	background-color: transparent;
 	grid-gap: 1em;
@@ -238,7 +267,7 @@ section:after {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
-/* -------------------- right grid remove-pop-up -------------------- */
+/* -------------------- remove pop-up -------------------- */
 .grid_popup-remove {
 	grid-area: popup;
 	display: grid;
@@ -246,7 +275,7 @@ section:after {
 	grid-template-rows: auto;
 	grid-template-areas:
 		"title title title"
-		"cancel . removeTile";
+		"cancel . submit";
 	color: white;
 	background-color: transparent;
 	grid-gap: 1em;

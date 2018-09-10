@@ -234,14 +234,14 @@ function process_buttonClick(event) {
 	logMessage("Button_Click: ", "target=" + target + ", class="
 			+ target.className);
 
-	if (target.className == "button cancel") {
+	if (target.id == "actionCancel") {
 		removeChildren();
-	} else if (target.className == "button addTile") {
+	} else if (target.id == "actionSubmitAdd") {
 		var inputTitle = document.getElementById("popup_add_title").value;
 		var inputUrl = document.getElementById("popup_add_url").value;
 		addOneTile(inputTitle, inputUrl);
 		removeChildren();
-	} else if (target.className == "button removeTile") {
+	} else if (target.id == "actionSubmitRemove") {
 		var inputTitle = document.getElementById("popup_remove_title").value;
 		removeOneTile(inputTitle);
 		removeChildren();
@@ -305,15 +305,13 @@ function showAddPopup()
 	inputUrl.placeholder = "Url, e.g. http://www.google.com";
 
 	var cancelButton = document.createElement("button");
-	cancelButton.innerText = "Cancel";
-	cancelButton.className = "button cancel";
-	cancelButton.id = "cancelTileButton";
+	cancelButton.className = "formActionButton actionCancel";
+	cancelButton.id = "actionCancel";
 	cancelButton.addEventListener('click', process_buttonClick);
 
 	var addButton = document.createElement("button");
-	addButton.innerText = "Add Tile";
-	addButton.className = "button addTile";
-	addButton.id = "addTileButton";
+	addButton.className = "formActionButton actionSubmit";
+	addButton.id = "actionSubmitAdd";
 	addButton.addEventListener('click', process_buttonClick);
 
 	var gridAdd = document.createElement("div");
@@ -338,15 +336,13 @@ function showRemovePopup()
 	inputTitle.placeholder = "Title, e.g. Google";
 
 	var cancelButton = document.createElement("button");
-	cancelButton.innerText = "Cancel";
-	cancelButton.className = "button cancel";
-	cancelButton.id = "cancelTileButton";
+	cancelButton.className = "formActionButton actionCancel";
+	cancelButton.id = "actionCancel";
 	cancelButton.addEventListener('click', process_buttonClick);
 
 	var removeButton = document.createElement("button");
-	removeButton.innerText = "Remove Tile";
-	removeButton.className = "button removeTile";
-	removeButton.id = "removeTileButton";
+	removeButton.className = "formActionButton actionSubmit";
+	removeButton.id = "actionSubmitRemove";
 	removeButton.addEventListener('click', process_buttonClick);
 
 	var gridRemove = document.createElement("div");
