@@ -8,28 +8,32 @@
 	</head>
 	
 	<body>
-		<div>
-			<div class="drop-down">
-			  <button class="drop-button" id="drop-button">OPTIONS</button>
-			  <div class="dropdown-content" id="dropdown-content">
-				<button class="opbutton" id="add">ADD</button>
-				<button class="opbutton" id="remove">REMOVE</button>
-				<button class="opbutton" id="save">SAVE</button>
-				<button class="opbutton" id="clear">CLEAR</button>
-				<button class="opbutton" id="restore">RESTORE</button>
-				<button class="opbutton" id="export">EXPORT</button>
-				<button class="opbutton" id="console">DEBUG</button>
-			  </div>
+		<article>
+			<h1>Quick Tiles</h1>
+		</article>
+		<section>
+			<nav>
+				<button class="optionsButton" id="optionsButton">OPTIONS</button>
+	        	<div class="actionContainer" id="actionContainer">
+					<button class="actionButton" id="add">ADD</button>
+					<button class="actionButton" id="remove">REMOVE</button>
+					<button class="actionButton" id="save">SAVE</button>
+					<button class="actionButton" id="clear">CLEAR</button>
+					<button class="actionButton" id="restore">RESTORE</button>
+					<button class="actionButton" id="export">EXPORT</button>
+					<button class="actionButton" id="console">DEBUG</button>
+				</div>
+			</nav>
+		</section>
+	
+		<div class="gridMain">
+			<div class="gridPopup" id="gridPopup"></div>
+			<div class="gridTileContainer">
+				<div class="gridTiles" id="gridTiles"></div>
 			</div>
-			<h1 class="header">Quick Tiles</h1>
 		</div>
 	
-		<div class="grid-main" id="grid-main">
-			<div class="grid-left" id="grid-left"></div>
-			<div class="grid-right" id="grid-right"></div>
-		</div>
-	
-		<div class="footer">
+		<div class="pageFooter">
 			<a><textarea class="console-text" id="console-text"></textarea></a>
 		</div>
 	</body>

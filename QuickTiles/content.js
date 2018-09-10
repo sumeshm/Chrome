@@ -9,15 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	// book-marks list loaded listener
 	chrome.bookmarks.getTree(process_bookmark);
 
-	const optionsButtonList = document.getElementsByClassName("opbutton");
+	const optionsButtonList = document.getElementsByClassName("actionButton");
 	for (i = 0; i < optionsButtonList.length; i++) {
-		optionsButtonList[i].addEventListener('click', process_optionsButtonClick);
+		optionsButtonList[i].addEventListener('click', process_actionButtonClick);
 	}
-
-	var dropdownButton = document.getElementById("drop-button");
-	dropdownButton.addEventListener('mouseenter', process_mouseOver);
-
-	document.body.addEventListener('click', process_bodyClick, false); 
 
 	logMessage("INIT: ", "End");
 });
@@ -96,7 +91,7 @@ function addOneTile(title, url) {
 	logMessage("Add_OneTile: ", "tileInfo: " + title + "- " + url);
 
 	if (title.length != 0 && url.length != 0) {
-		const gridList = document.getElementsByClassName("grid-left");
+		const gridList = document.getElementsByClassName("gridTiles");
 
 		const buttonList = gridList[0].getElementsByClassName("tile_button");
 		if (buttonList.length > 30) {
@@ -144,7 +139,7 @@ function addOneTile(title, url) {
 function removeOneTile(title) {
 	logMessage("Remove_OneTile: ", "title=" + title);
 	if (title.length != 0) {
-		const gridList = document.getElementsByClassName("grid-left");
+		const gridList = document.getElementsByClassName("gridTiles");
 		const buttonList = gridList[0].getElementsByClassName("tile_button");
 		for (i = 0; i < buttonList.length; i++) {
 			var button = buttonList[i];
@@ -162,7 +157,7 @@ function createTilesJsonArray()
 {
 	var jsonArray = [];
 	
-	const gridList = document.getElementsByClassName("grid-left");
+	const gridList = document.getElementsByClassName("gridTiles");
 
 	const buttonList = gridList[0].getElementsByClassName("tile_button");
 	for (i = 0; i < buttonList.length; i++) {
@@ -254,13 +249,13 @@ function process_buttonClick(event) {
 }
 
 // handle ADD, REMOVE, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
-function process_optionsButtonClick(event) {
+function process_actionButtonClick(event) {
 	var target = event.target || event.srcElement;
 	logMessage("HEADER_Button_Click: ", "target=" + target + ", class="
 			+ target.className + ", id=" + target.id);
 
-	var dropdownContent = document.getElementById("dropdown-content");
-	dropdownContent.style.display = "none";
+	var actionContainer = document.getElementById("actionContainer");
+	actionContainer.style.visibility = "visible" ;
 
 	if (target.id == "add") {
 		showAddPopup();
@@ -270,12 +265,12 @@ function process_optionsButtonClick(event) {
 		var jsonArray = createTilesJsonArray();
 		writeToStorage(jsonArray);
 	} else if (target.id == "clear") {
-		const gridList = document.getElementsByClassName("grid-left");
+		const gridList = document.getElementsByClassName("gridTiles");
 		while (gridList[0].hasChildNodes()) {
 			gridList[0].removeChild(gridList[0].lastChild);
 		}
 	} else if (target.id == "restore") {
-		const gridList = document.getElementsByClassName("grid-left");
+		const gridList = document.getElementsByClassName("gridTiles");
 		while (gridList[0].hasChildNodes()) {
 			gridList[0].removeChild(gridList[0].lastChild);
 		}
@@ -294,23 +289,8 @@ function process_optionsButtonClick(event) {
 	}
 }
 
-function process_mouseOver(event) {
-	var dropdownContent = document.getElementById("dropdown-content");
-	dropdownContent.style.display = "block";
-	removeChildren();
-}
-
-function process_bodyClick(event) {
-	var target = event.target || event.srcElement;
-	logMessage("BODY_Click: ", "target=" + target + ", class="
-			+ target.className + ", id=" + target.id);
-
-	var dropdownContent = document.getElementById("dropdown-content");
-	dropdownContent.style.display = "none";
-}
-
 //show the user input pop-up
-function showAddPopup(action)
+function showAddPopup()
 {
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
@@ -349,7 +329,7 @@ function showAddPopup(action)
 }
 
 //show the user input pop-up
-function showRemovePopup(action)
+function showRemovePopup()
 {
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
@@ -382,7 +362,7 @@ function showRemovePopup(action)
 
 function removeChildren()
 {
-	const gridList = document.getElementsByClassName("grid-right");
+	const gridList = document.getElementsByClassName("gridPopup");
 
 	while (gridList[0].hasChildNodes()) {
 		gridList[0].removeChild(gridList[0].lastChild);
@@ -391,7 +371,7 @@ function removeChildren()
 
 function replaceChildren(newChild)
 {
-	const gridList = document.getElementsByClassName("grid-right");
+	const gridList = document.getElementsByClassName("gridPopup");
 
 	while (gridList[0].hasChildNodes()) {
 		gridList[0].removeChild(gridList[0].lastChild);

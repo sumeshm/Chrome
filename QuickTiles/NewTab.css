@@ -12,60 +12,83 @@ body {
 }
 
 /* ------------------------- header  ------------------------ */
-.header {
+
+article {
+    float: left;
+    text-align: center;
+    width: 85%;
+    background-color: transparent;
+    height: 100%;
+}
+
+h1 {
 	font-size: 350%;
-	padding: 1%;
 	font-family: verdana;
 	text-align: center;
 	font-style: italic;
 	color: white;
+    margin-left: 20%;
+    margin-right: 0;
 }
 
-.drop-down {
-	padding: 1.5em 2em;
-	float: right;
+nav {
+    float: right;
+    width: 6%;
+    color: black;
+	padding: 1em 1em;
+    margin-top: 2%;
+    margin-right: 2%;
 }
 
-.drop-down .drop-button {
+.optionsButton {
+    float: right;
 	padding: 1em 1em;
 	border: 1px solid white;
-	border-radius: 5px;
+	border-radius: 20px;
 	background-color: transparent;
  	color: white;
 	cursor: pointer;
-	font-size: 110%;
+	font-size: 100%;
 }
 
-.drop-down .dropdown-content {
+.actionContainer {
 	display: none;
     position: absolute;
 	color: black;
 }
 
-.dropdown-content .opbutton {
+.actionButton {
 	cursor: pointer;
-	background-color: white;
-	padding: 1em 2em;
+	color: white;
+	background-color: transparent;
+	padding: 1em 0em;
 	border-radius: 20px;
-    width: 90%;
-    text-align: left;
+    width: 80%;
+    text-align: center;
 	font-size: 100%;
 }
 
-.opbutton:hover {background-color: #ddd;}
+.actionButton:hover 		{ background-color: #ddd; }
+nav:hover .actionContainer 	{ display: block; } 
+nav:hover .optionsButton 	{ display: none }
 
-.drop-down:hover .dropdown-content {display: block;}
+
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
 
 /* ------------------------- footer ------------------------- */
 
-.footer {
+.pageFooter {
+	position: absolute;
+	bottom: 1em;
 	overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
+	margin-left: 5%;
 	font-family: verdana;
- 	width: 95%;
+	width: 90%;
 }
 
 .footer_button {
@@ -91,6 +114,7 @@ body {
 	border: 1px solid white;
 	border-radius: 5px;
  	color: white;
+ 	padding: 0em 0em 0em 1em;
 }
 
 .console-text:focus {
@@ -98,18 +122,26 @@ body {
 }
 
 /* -------------------- main grid container -------------------- */
-.grid-main {
+.gridMain {
 	display: grid;
-	grid-template-columns: 80% 20%;
-	padding: 1em 2em;
+	grid-template-columns: 100%;
+	grid-gap: 2em 0em;
 }
 
 /* -------------------- left grid with tiles -------------------- */
-.grid-left {
-	display: grid;
-	grid-template-columns: 14% 14% 14% 14% 14% 14%;
+.gridTileContainer {
+	display: inline-grid;
+	grid-template-columns: 10% 80% 10%;
+	grid-template-rows: auto;
+	grid-template-areas: ". tile .";
+}
+
+.gridTiles {
+	grid-area: tile;
+	display: inline-grid;
+	grid-template-columns: repeat(6, auto);
 	grid-gap: 3em 3em;
-	padding: 1em 1em;
+	width: 100%;
 }
 
 .tile_button {
@@ -129,33 +161,18 @@ body {
 }
 
 /* -------------------- right grid -------------------- */
-.grid-right {
-	display: grid;
-	grid-gap: 1em 1em;
-	text-align: center;
-	padding: 1em 1em;
-}
-
-/* -------------------- right-grid buttons -------------------- */
-.grid-right-buttons {
-	display: grid;
-	grid-template-columns: 30% 30% 30%;
+.gridPopup {
+	display: inline-grid;
+	grid-template-columns: 40% 20% 40%;
 	grid-template-rows: auto;
-	grid-template-areas:
-		"add . remove"
-		"save clear restore"
-		"select select select"
-		"popup popup popup";
+	grid-template-areas: ". popup .";
 	grid-gap: 1em 1em;
-	text-align: center;
-	background-color: transparent;
 	padding: 1em 1em;
-	height: 13em;
-    transition: 0.3s;
+	text-align: center;
 }
 
-.grid-right-buttons:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+.select {
+	grid-area: select;
 }
 
 .button {
@@ -169,62 +186,6 @@ body {
 	border: 1px solid white;
 	height: 80%;
 	width: 100%;
-}
-
-.button :hover {
-	color: black;
-}
-
-.add {
-	grid-area: add;
-	padding: 1em 0em;
-	height: 100%;
-}
-
-.remove {
-	grid-area: remove;
-	padding: 1em 0em;
-	height: 100%;
-}
-
-.save {
-	grid-area: save;
-	grid-row-start: 2;
-}
-
-.clear {
-	grid-area: clear;
-	grid-row-start: 2;
-}
-
-.restore {
-	grid-area: restore;
-	grid-row-start: 2;
-}
-
-.select {
-	grid-area: select;
-}
-
-/* -------------------- right grid add-pop-up -------------------- */
-.grid_popup-add {
-	display: grid;
-	grid-template-columns: 30% 30% 30%;
-	grid-template-rows: auto;
-	grid-template-areas:
-		"title title title"
-		"url url url"
-		"cancel . addTile";
-	color: white;
-	background-color: transparent;
-	grid-gap: 1em;
-	text-align: center;
-	padding: 1em 1em;
-	height: 12em;
-}
-
-.grid_popup-add:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
 .title {
@@ -251,8 +212,35 @@ body {
 	grid-area: addTile;
 }
 
+.removeTile {
+	grid-area: removeTile;
+}
+
+/* -------------------- right grid add-pop-up -------------------- */
+.grid_popup-add {
+	grid-area: popup;
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"title title title"
+		"url url url"
+		"cancel . addTile";
+	color: white;
+	background-color: transparent;
+	grid-gap: 1em;
+	text-align: center;
+	padding: 1em 1em;
+	height: 12em;
+}
+
+.grid_popup-add:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+}
+
 /* -------------------- right grid remove-pop-up -------------------- */
 .grid_popup-remove {
+	grid-area: popup;
 	display: grid;
 	grid-template-columns: 30% 30% 30%;
 	grid-template-rows: auto;
@@ -269,8 +257,4 @@ body {
 
 .grid_popup-remove:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
-}
-
-.removeTile {
-	grid-area: removeTile;
 }
