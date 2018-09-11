@@ -23,11 +23,11 @@ article {
 
 h1 {
 	font-size: 350%;
-	font-family: verdana;
+	font-family: Lucida Console;
 	text-align: center;
 	font-style: italic;
 	color: white;
-    margin-left: 17%;
+    margin-left: 19%;
     margin-right: 0;
 }
 
@@ -54,6 +54,7 @@ nav {
 	display: none;
     position: absolute;
 	color: black;
+    transition: 5s;
 }
 
 .actionButton {
@@ -155,18 +156,21 @@ section:after {
 	display: inline-grid;
 	grid-template-columns: 10% 80% 10%;
 	grid-template-rows: auto;
-	grid-template-areas: ". tile .";
+	grid-template-areas:
+				". gridTiles ."
+				". bookmarks .";
+	grid-gap: 5em 0em;
 }
 
 .gridTiles {
-	grid-area: tile;
+	grid-area: gridTiles;
 	display: inline-grid;
 	grid-template-columns: repeat(6, auto);
 	grid-gap: 3em 3em;
 	width: 100%;
 }
 
-.tile_button {
+.tileButton {
 	cursor: pointer;
 	color: white;
 	text-align: left;
@@ -174,11 +178,30 @@ section:after {
 	padding: 1em 0em 1em 1em;
   	border-radius: 5px;
 	border: 1px solid white;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
     transition: 0.2s;
 }
 
-.tile_button:hover {
+.tileButton:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+}
+
+.bookmarks {
+	grid-area: bookmarks;
+	padding: 1em 1em;
+	color: white;
+	background-color: transparent;
+	font-size: 110%;
+	border-radius: 5px;
+	border: 1px solid white;
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+    transition: 0.2s;
+ }
+
+.bookmarks:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
@@ -191,10 +214,6 @@ section:after {
 	grid-gap: 1em 1em;
 	padding: 1em 1em;
 	text-align: center;
-}
-
-.select {
-	grid-area: select;
 }
 
 .button {

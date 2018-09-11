@@ -93,7 +93,7 @@ function addOneTile(title, url) {
 	if (title.length != 0 && url.length != 0) {
 		const gridList = document.getElementsByClassName("gridTiles");
 
-		const buttonList = gridList[0].getElementsByClassName("tile_button");
+		const buttonList = gridList[0].getElementsByClassName("tileButton");
 		if (buttonList.length > 30) {
 			logMessage("addOneTile: ", "ERROR - Tile limit of 30 reached");
 			return;
@@ -101,7 +101,7 @@ function addOneTile(title, url) {
 
 		var button = document.createElement("button");
 		logMessage("Add_OneTile: ", "button=" + button);
-		button.className = "tile_button";
+		button.className = "tileButton";
 		button.value = url;
 		button.innerText = title;
 		button.addEventListener('click', process_tileButtonClick);
@@ -140,7 +140,7 @@ function removeOneTile(title) {
 	logMessage("Remove_OneTile: ", "title=" + title);
 	if (title.length != 0) {
 		const gridList = document.getElementsByClassName("gridTiles");
-		const buttonList = gridList[0].getElementsByClassName("tile_button");
+		const buttonList = gridList[0].getElementsByClassName("tileButton");
 		for (i = 0; i < buttonList.length; i++) {
 			var button = buttonList[i];
 			if (button.innerText.toUpperCase() === title.toUpperCase()) {
@@ -159,7 +159,7 @@ function createTilesJsonArray()
 	
 	const gridList = document.getElementsByClassName("gridTiles");
 
-	const buttonList = gridList[0].getElementsByClassName("tile_button");
+	const buttonList = gridList[0].getElementsByClassName("tileButton");
 	for (i = 0; i < buttonList.length; i++) {
 		jsonArray.push({
 			"title" : buttonList[i].innerText,
@@ -210,7 +210,8 @@ function process_listChange() {
 //handle loading of book-marks
 function process_bookmark(bookmarks) {
 	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
-	var select = document.querySelector('.select');
+
+	var select = document.getElementById("bookmarks");
 
 	for (var i = 0; i < bookmarks.length; i++) {
 		var bookmark = bookmarks[i];
