@@ -166,7 +166,7 @@ section:after {
 	grid-area: gridTiles;
 	display: inline-grid;
 	grid-template-columns: repeat(6, auto);
-	grid-gap: 3em 3em;
+	grid-gap: 3em;
 	width: 100%;
 }
 
@@ -205,13 +205,14 @@ section:after {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
 }
 
+
 /* -------------------- grid pop-up -------------------- */
 .gridPopup {
 	display: inline-grid;
 	grid-template-columns: 40% 20% 40%;
 	grid-template-rows: auto;
 	grid-template-areas: ". popup .";
-	grid-gap: 1em 1em;
+	grid-gap: 1em;
 	padding: 1em 1em;
 	text-align: center;
 }

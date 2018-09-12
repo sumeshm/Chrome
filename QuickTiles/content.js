@@ -129,7 +129,7 @@ function addOneTile(title, url) {
 		button.style.background = "transparent url('" + trimURL + "/favicon.ico" + "')";
 		button.style.backgroundRepeat = "no-repeat";
 		button.style.backgroundPosition = "95% 50%";
-		button.style.backgroundSize = "35px";
+		button.style.backgroundSize = "30px";
 		
 		gridList[0].appendChild(button);
 	}
