@@ -165,7 +165,7 @@ section:after {
 .gridTiles {
 	grid-area: gridTiles;
 	display: inline-grid;
-	grid-template-columns: repeat(6, auto);
+	grid-template-columns: repeat(6, 14.33%);
 	grid-gap: 3em;
 	width: 100%;
 }
