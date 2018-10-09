@@ -1,0 +1,82 @@
+[
+	{
+		"title": "Dev-Portal",
+		"url": "https://devportal.intuit.com/a1/index.html?legacy#/main/my-accounts"
+	},
+	{
+		"title": "Service-Now",
+		"url": "https://intuit.service-now.com/sp?id=my_tickets"
+	},
+	{
+		"title": "GIT",
+		"url": "https://github.intuit.com/Contact-Center-Services"
+	},
+	{
+		"title": "JIRA",
+		"url": "http://jira.intuit.com"
+	},
+	{
+		"title": "Confluence",
+		"url": "https://wiki.intuit.com"
+	},
+	{
+		"title": "Google",
+		"url": "https://www.google.co.in"
+	},
+	{
+		"title": "Alti-Coral",
+		"url": "https://o365altimetrik.sharepoint.com/Pages/Default.aspx"
+	},
+	{
+		"title": "Alti-Leave",
+		"url": "https://ebfz.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_afrLoop=4924040914946095&_adf.ctrl-state=10rhv2oz0s_19"
+	},
+	{
+		"title": "Alti-Time",
+		"url": "https://aep.altimetrik.com/GlobalTimesheet"
+	},
+	{
+		"title": "Alti-Mail",
+		"url": "https://outlook.office365.com/owa/?realm=altimetrik.com&exsvurl=1&ll-cc=2057&modurl=0"
+	},
+	{
+		"title": "Yahoo",
+		"url": "http://mail.yahoo.com"
+	},
+	{
+		"title": "Gmail",
+		"url": "https://mail.google.com/mail/u/0/#inbox"
+	},
+	{
+		"title": "Amazon",
+		"url": "http://www.amazon.in"
+	},
+	{
+		"title": "Prime",
+		"url": "https://www.primevideo.com"
+	},
+	{
+		"title": "Bescom",
+		"url": "https://www.bescom.co.in/SCP/Myhome.aspx"
+	},
+	{
+		"title": "Airtel",
+		"url": "https://www.airtel.in/s/selfcare"
+	},
+	{
+		"title": "PayTM",
+		"url": "https://paytm.com/"
+	},
+	{
+		"title": "Team-BHP",
+		"url": "https://www.team-bhp.com/forum"
+	},
+	{
+		"title": "ICICI",
+		"url": "https://www.icicibank.com/safe-online-banking/safe-online-banking.page?"
+	},
+	{
+		"title": "Citi",
+		"url": "https://www.online.citibank.co.in/"
+	}
+]

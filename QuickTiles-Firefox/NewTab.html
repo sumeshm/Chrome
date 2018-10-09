@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>New Tab</title>
+		<link rel="stylesheet" href="NewTab.css">
+		<script src="content.js"></script>
+	</head>
+	
+	<body>
+		<article>
+			<h1>Quick Tiles</h1>
+		</article>
+		<section>
+			<nav>
+				<button class="optionsButton" id="optionsButton"></button>
+	        	<div class="actionContainer" id="actionContainer">
+					<button class="actionButton actionAdd" id="add"/></button>
+					<button class="actionButton actionRemove" id="remove"></button>
+					<button class="actionButton actionSave" id="save"></button>
+					<button class="actionButton actionClear" id="clear"></button>
+					<button class="actionButton actionRestore" id="restore"></button>
+					<button class="actionButton actionExport" id="export"></button>
+					<button class="actionButton actionConsole" id="console"></button>
+				</div>
+			</nav>
+		</section>
+	
+		<div class="gridMain">
+			<div class="gridPopup" id="gridPopup"></div>
+			<div class="gridTileContainer">
+				<div class="gridTiles" id="gridTiles"></div>
+				<select class="bookmarks" id="bookmarks"></select>
+			</div>
+		</div>
+	
+		<div class="pageFooter">
+			<a><textarea class="console-text" id="console-text"></textarea></a>
+		</div>
+	</body>
+</html>
