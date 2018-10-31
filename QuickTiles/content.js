@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	readFromStorage();
 
 	// book-marks list loaded listener
+	var select = document.getElementById("selectBookmarks");
+	select.addEventListener('change', process_listChange);
 	chrome.bookmarks.getTree(process_bookmark);
 
 	const optionsButtonList = document.getElementsByClassName("actionButton");
@@ -199,19 +201,23 @@ function process_tileButtonClick(event) {
 
 //handle selection of book-mark from drop down list
 function process_listChange() {
-	var urlValue = document.querySelector('.select').value;
-	logMessage("BookMark_Selected: ", "URL:" + urlValue)
-	chrome.tabs.create({
-		url : urlValue,
-		active : false
-	});
+	logMessage("BookMark_Selected", "")
+	var selectBookmarks = document.querySelector('.bookmarks');
+	if (selectBookmarks != null) {
+		var urlValue = selectBookmarks.value;
+		logMessage("BookMark_Selected: ", "URL:" + urlValue)
+		chrome.tabs.create({
+			url : urlValue,
+			active : false
+		});
+	}
 }
 
 //handle loading of book-marks
 function process_bookmark(bookmarks) {
 	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
 
-	var select = document.getElementById("bookmarks");
+	var select = document.getElementById("selectBookmarks");
 
 	for (var i = 0; i < bookmarks.length; i++) {
 		var bookmark = bookmarks[i];
