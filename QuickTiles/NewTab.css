@@ -81,6 +81,10 @@ nav:hover .optionsButton {
 	background: url('images/actionRemove.png') no-repeat transparent center;
 }
 
+.actionEdit {
+	background: url('images/actionEdit.png') no-repeat transparent center;
+}
+
 .actionSave {
 	background: url('images/actionSave.png') no-repeat transparent center;
 }
@@ -269,6 +273,11 @@ section:after {
 	background: url('images/actionSubmit.png') no-repeat transparent center;
 }
 
+.actionDelete {
+	grid-area: delete;
+	background: url('images/actionRemove.png') no-repeat transparent center;
+}
+
 /* -------------------- add pop-up -------------------- */
 
 .grid_popup-add {
@@ -306,5 +315,25 @@ section:after {
 }
 
 .grid_popup-remove:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* -------------------- edit pop-up -------------------- */
+
+.grid_popup-edit {
+	grid-area: popup;
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: auto;
+	grid-template-areas: "title title title" "url url url" "cancel submit delete";
+	color: white;
+	background-color: transparent;
+	grid-gap: 1em;
+	text-align: center;
+	padding: 1em 1em;
+	height: 12em;
+}
+
+.grid_popup-edit:hover {
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }

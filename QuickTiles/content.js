@@ -1,3 +1,8 @@
+var bookMarkList = [];
+var stateView = "view";
+var stateEdit = "edit";
+var state = "view";
+var editIndex = -1;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -16,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		optionsButtonList[i].addEventListener('click', process_actionButtonClick);
 	}
 
+	state = stateView;
 	logMessage("INIT: ", "End");
 });
 
-var bookMarkList = [];
 
 //read storage for tile list and add them to HTML page
 function readFromStorage() {
@@ -85,11 +90,11 @@ function addMultipleTiles(jsonArray) {
 
 	for (i = 0; i < jsonArray.length; i++) {
 		var tileInfo = jsonArray[i];
-		addOneTile(tileInfo.title, tileInfo.url);
+		addOneTile(tileInfo.title, tileInfo.url, i);
 	}
 }
 
-function addOneTile(title, url) {
+function addOneTile(title, url, index) {
 	logMessage("Add_OneTile: ", "tileInfo: " + title + "- " + url);
 
 	if (title.length != 0 && url.length != 0) {
@@ -106,7 +111,9 @@ function addOneTile(title, url) {
 		button.className = "tileButton";
 		button.value = url;
 		button.innerText = title;
-		button.addEventListener('click', process_tileButtonClick);
+		button.addEventListener("click", function() {
+			process_tileButtonClick(button, index);
+		});
 
 		// add icon
 		var trimURL = url;
@@ -137,18 +144,30 @@ function addOneTile(title, url) {
 }
 
 //remove one tile from HTML page by matching title
-function removeOneTile(title) {
-	logMessage("Remove_OneTile: ", "title=" + title);
-	if (title.length != 0) {
+function updateOneTile(title, url) {
+	logMessage("Update_OneTile: ", "title=" + title + ", url=" + url + ", index=" + editIndex);
+	if (title.length != 0 && editIndex > -1) {
 		const gridList = document.getElementsByClassName("gridTiles");
-		const buttonList = gridList[0].getElementsByClassName("tileButton");
-		for (i = 0; i < buttonList.length; i++) {
-			var button = buttonList[i];
-			if (button.innerText.toUpperCase() === title.toUpperCase()) {
-				logMessage("removeOneTile: ", "FOUND @ " + i);
-				gridList[0].removeChild(button);
-				break;
-			}
+		const tileButtomList = gridList[0].getElementsByClassName("tileButton");
+		if (tileButtomList.length != 0 && editIndex < tileButtomList.length) {
+			logMessage("updateOneTile: ", "FOUND @ " + editIndex);
+			var button = tileButtomList[editIndex];
+			button.innerText = title;
+			button.value = url;
+		}
+	}
+}
+
+//remove one tile from HTML page by matching title
+function removeOneTile() {
+	logMessage("Remove_OneTile: ", "index=" + editIndex);
+	if (editIndex > -1) {
+		const gridList = document.getElementsByClassName("gridTiles");
+		const tileButtomList = gridList[0].getElementsByClassName("tileButton");
+		if (tileButtomList.length != 0 && editIndex < tileButtomList.length) {
+			logMessage("removeOneTile: ", "FOUND @ " + editIndex);
+			var button = tileButtomList[editIndex];
+			gridList[0].removeChild(button);
 		}
 	}
 }
@@ -170,6 +189,20 @@ function createTilesJsonArray() {
 	return jsonArray;
 }
 
+function createTilesJsonArrayEditor() {
+	var jsonArray = [];
+
+	const gridList = document.getElementsByClassName("gridTiles");
+
+	const buttonList = gridList[0].getElementsByClassName("tileButton");
+	for (i = 0; i < buttonList.length; i++) {
+		jsonArray.push({
+			"title": buttonList[i].innerText,
+			"url": buttonList[i].value
+		});
+	}
+}
+
 //handle loading of book-marks
 function addBookmark(select) {
 	logMessage("BookMark_Add: ", "bookmarks:" + bookMarkList.length)
@@ -186,15 +219,25 @@ function addBookmark(select) {
 }
 
 //handle tile-button press
-function process_tileButtonClick(event) {
-	var target = event.target || event.srcElement;
+function process_tileButtonClick(target, index) {
+	//var target = event.target || event.srcElement;
 	logMessage("process_tileButtonClick: ", "target=" + target + ", class="
-		+ target.className);
+		+ target.className + ", index=" + index);
 
-	chrome.tabs.create({
-		url: target.value,
-		active: false
-	});
+	if (state == stateView) {
+		// open new tab for the tile's url
+		chrome.tabs.create({
+			url: target.value,
+			active: false
+		});
+	} else {
+		// update edit popup
+		var popUpTitle = document.getElementById("popup_edit_title");
+		var popUpUrl = document.getElementById("popup_edit_url");
+		popUpTitle.value = target.innerText;
+		popUpUrl.value = target.value;
+		editIndex = index;
+	}
 }
 
 //handle selection of book-mark from drop down list
@@ -240,20 +283,36 @@ function process_buttonClick(event) {
 		+ target.className);
 
 	if (target.id == "actionCancel") {
-		removeChildren();
 	} else if (target.id == "actionSubmitAdd") {
 		var inputTitle = document.getElementById("popup_add_title").value;
 		var inputUrl = document.getElementById("popup_add_url").value;
 		addOneTile(inputTitle, inputUrl);
-		removeChildren();
 	} else if (target.id == "actionSubmitRemove") {
-		var inputTitle = document.getElementById("popup_remove_title").value;
-		removeOneTile(inputTitle);
-		removeChildren();
+		// update the tile details
+		var updatedTitle = document.getElementById("popup_edit_title").value;
+		var updatedUrl = document.getElementById("popup_edit_url").value;
+		updateOneTile(updatedTitle, updatedUrl, );
+		// save changes
+		var jsonArray = createTilesJsonArray();
+		writeToStorage(jsonArray);
+	} else if (target.id == "actionDelete") {
+		// delete the tile
+		var inputTitle = document.getElementById("popup_edit_title").value;
+		removeOneTile();
+		// save changes
+		var jsonArray = createTilesJsonArray();
+		writeToStorage(jsonArray);
+
 	}
+
+	removeChildren();
+
+	// bring the state out of edit mode
+	state = stateView;
+	editIndex =-1;
 }
 
-// handle ADD, REMOVE, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
+// handle ADD, REMOVE, EDIT, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
 function process_actionButtonClick(event) {
 	var target = event.target || event.srcElement;
 	logMessage("HEADER_Button_Click: ", "target=" + target + ", class="
@@ -266,6 +325,8 @@ function process_actionButtonClick(event) {
 		showAddPopup();
 	} else if (target.id == "remove") {
 		showRemovePopup();
+	} else if (target.id == "edit") {
+		showEditPopup();
 	} else if (target.id == "save") {
 		var jsonArray = createTilesJsonArray();
 		writeToStorage(jsonArray);
@@ -357,6 +418,53 @@ function showRemovePopup() {
 	gridRemove.appendChild(removeButton);
 
 	replaceChildren(gridRemove);
+}
+
+function showEditPopup() {
+	logMessage("showEditPopup: ");
+
+	// bring the state into edit mode
+	state = stateEdit;
+	editIndex =-1;
+
+	var inputTitle = document.createElement("input");
+	inputTitle.className = "input title";
+	inputTitle.type = "text";
+	inputTitle.id = "popup_edit_title";
+	inputTitle.placeholder = "Click on any tile to edit";
+
+	var inputUrl = document.createElement("input");
+	inputUrl.className = "input url";
+	inputUrl.type = "text";
+	inputUrl.id = "popup_edit_url";
+	inputUrl.placeholder = "Click on any tile to edit";
+
+	var cancelButton = document.createElement("button");
+	cancelButton.className = "formActionButton actionCancel";
+	cancelButton.id = "actionCancel";
+	cancelButton.addEventListener('click', process_buttonClick);
+
+	var removeButton = document.createElement("button");
+	removeButton.className = "formActionButton actionSubmit";
+	removeButton.id = "actionSubmitRemove";
+	removeButton.addEventListener('click', process_buttonClick);
+
+	var dleteButton = document.createElement("button");
+	dleteButton.className = "formActionButton actionDelete";
+	dleteButton.id = "actionDelete";
+	dleteButton.addEventListener('click', process_buttonClick);
+
+	var gridEdit = document.createElement("div");
+	gridEdit.className = "grid_popup-edit";
+	gridEdit.id = "grid_popup-edit";
+
+	gridEdit.appendChild(inputTitle);
+	gridEdit.appendChild(inputUrl);
+	gridEdit.appendChild(cancelButton);
+	gridEdit.appendChild(removeButton);
+	gridEdit.appendChild(dleteButton);
+
+	replaceChildren(gridEdit);
 }
 
 function removeChildren() {
