@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
 	logMessage("INIT: ", "Start");
 
@@ -25,14 +25,14 @@ var bookMarkList = [];
 function readFromStorage() {
 	var TilesInfoKey = 'TilesInfoKey';
 
-	chrome.storage.local.get([ TilesInfoKey ], function(jsonArrayStr) {
+	chrome.storage.local.get([TilesInfoKey], function (jsonArrayStr) {
 		if (!jsonArrayStr.TilesInfoKey) {
 			logMessage("Read_Storage: ", "get key.TilesInfoKey=UNDEFINED, restore from file");
 			readInputFile();
 		} else {
 			var jsonArray = JSON.parse(jsonArrayStr.TilesInfoKey);
 			logMessage("Read_Storage: ", "jsonArray.length="
-					+ jsonArray.length);
+				+ jsonArray.length);
 
 			addMultipleTiles(jsonArray);
 		}
@@ -46,8 +46,8 @@ function writeToStorage(jsonArray) {
 	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
 
 	chrome.storage.local.set({
-		TilesInfoKey : jsonArrayStr
-	}, function() {
+		TilesInfoKey: jsonArrayStr
+	}, function () {
 		logMessage("Write_Storage: ", "set key done");
 	});
 }
@@ -56,7 +56,7 @@ function writeToStorage(jsonArray) {
 function readInputFile() {
 	var fileReadRequest = new XMLHttpRequest();
 	fileReadRequest.open("GET", 'url.json', true);
-	fileReadRequest.onreadystatechange = function() {
+	fileReadRequest.onreadystatechange = function () {
 		if (fileReadRequest.readyState === 4) {
 			var fileContents = fileReadRequest.responseText;
 			var jsonArray = JSON.parse(fileContents);
@@ -123,8 +123,7 @@ function addOneTile(title, url) {
 			trimURL = trimURL.substring(0, index2);
 		}
 
-		if (trimURL.length == 0)
-		{
+		if (trimURL.length == 0) {
 			trimURL = url;
 		}
 
@@ -132,7 +131,7 @@ function addOneTile(title, url) {
 		button.style.backgroundRepeat = "no-repeat";
 		button.style.backgroundPosition = "95% 50%";
 		button.style.backgroundSize = "30px";
-		
+
 		gridList[0].appendChild(button);
 	}
 }
@@ -155,17 +154,16 @@ function removeOneTile(title) {
 }
 
 //fetch list of tiles and build corresponding JSON array
-function createTilesJsonArray()
-{
+function createTilesJsonArray() {
 	var jsonArray = [];
-	
+
 	const gridList = document.getElementsByClassName("gridTiles");
 
 	const buttonList = gridList[0].getElementsByClassName("tileButton");
 	for (i = 0; i < buttonList.length; i++) {
 		jsonArray.push({
-			"title" : buttonList[i].innerText,
-			"url" : buttonList[i].value
+			"title": buttonList[i].innerText,
+			"url": buttonList[i].value
 		});
 	}
 
@@ -191,11 +189,11 @@ function addBookmark(select) {
 function process_tileButtonClick(event) {
 	var target = event.target || event.srcElement;
 	logMessage("process_tileButtonClick: ", "target=" + target + ", class="
-			+ target.className);
+		+ target.className);
 
 	chrome.tabs.create({
-		url : target.value,
-		active : false
+		url: target.value,
+		active: false
 	});
 }
 
@@ -207,8 +205,8 @@ function process_listChange() {
 		var urlValue = selectBookmarks.value;
 		logMessage("BookMark_Selected: ", "URL:" + urlValue)
 		chrome.tabs.create({
-			url : urlValue,
-			active : false
+			url: urlValue,
+			active: false
 		});
 	}
 }
@@ -239,7 +237,7 @@ function process_bookmark(bookmarks) {
 function process_buttonClick(event) {
 	var target = event.target || event.srcElement;
 	logMessage("Button_Click: ", "target=" + target + ", class="
-			+ target.className);
+		+ target.className);
 
 	if (target.id == "actionCancel") {
 		removeChildren();
@@ -259,10 +257,10 @@ function process_buttonClick(event) {
 function process_actionButtonClick(event) {
 	var target = event.target || event.srcElement;
 	logMessage("HEADER_Button_Click: ", "target=" + target + ", class="
-			+ target.className + ", id=" + target.id);
+		+ target.className + ", id=" + target.id);
 
 	var actionContainer = document.getElementById("actionContainer");
-	actionContainer.style.visibility = "visible" ;
+	actionContainer.style.visibility = "visible";
 
 	if (target.id == "add") {
 		showAddPopup();
@@ -283,13 +281,13 @@ function process_actionButtonClick(event) {
 		}
 		readInputFile();
 	} else if (target.id == "console") {
-			var consoleTextArea = document.getElementById("console-text")
-			if (consoleTextArea.style.display === "block") {
-				consoleTextArea.style.display = "none";
-			} else {
-				consoleTextArea.style.display = "block";
-			}
-			consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
+		var consoleTextArea = document.getElementById("console-text")
+		if (consoleTextArea.style.display === "block") {
+			consoleTextArea.style.display = "none";
+		} else {
+			consoleTextArea.style.display = "block";
+		}
+		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
 	} else if (target.id == "export") {
 		var jsonArray = createTilesJsonArray();
 		writeToInputFile(jsonArray);
@@ -297,8 +295,7 @@ function process_actionButtonClick(event) {
 }
 
 //show the user input pop-up
-function showAddPopup()
-{
+function showAddPopup() {
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
 	inputTitle.type = "text";
@@ -334,8 +331,7 @@ function showAddPopup()
 }
 
 //show the user input pop-up
-function showRemovePopup()
-{
+function showRemovePopup() {
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
 	inputTitle.type = "text";
@@ -363,8 +359,7 @@ function showRemovePopup()
 	replaceChildren(gridRemove);
 }
 
-function removeChildren()
-{
+function removeChildren() {
 	const gridList = document.getElementsByClassName("gridPopup");
 
 	while (gridList[0].hasChildNodes()) {
@@ -372,8 +367,7 @@ function removeChildren()
 	}
 }
 
-function replaceChildren(newChild)
-{
+function replaceChildren(newChild) {
 	const gridList = document.getElementsByClassName("gridPopup");
 
 	while (gridList[0].hasChildNodes()) {
