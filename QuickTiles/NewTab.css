@@ -77,10 +77,6 @@ nav:hover .optionsButton {
 	background: url('images/actionAdd.png') no-repeat transparent center;
 }
 
-.actionRemove {
-	background: url('images/actionRemove.png') no-repeat transparent center;
-}
-
 .actionEdit {
 	background: url('images/actionEdit.png') no-repeat transparent center;
 }
@@ -275,7 +271,7 @@ section:after {
 
 .actionDelete {
 	grid-area: delete;
-	background: url('images/actionRemove.png') no-repeat transparent center;
+	background: url('images/actionDelete.png') no-repeat transparent center;
 }
 
 /* -------------------- add pop-up -------------------- */
@@ -295,26 +291,6 @@ section:after {
 }
 
 .grid_popup-add:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
-}
-
-/* -------------------- remove pop-up -------------------- */
-
-.grid_popup-remove {
-	grid-area: popup;
-	display: grid;
-	grid-template-columns: 30% 30% 30%;
-	grid-template-rows: auto;
-	grid-template-areas: "title title title" "cancel . submit";
-	color: white;
-	background-color: transparent;
-	grid-gap: 1em;
-	text-align: center;
-	padding: 1em 1em;
-	height: 9em;
-}
-
-.grid_popup-remove:hover {
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
 

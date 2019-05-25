@@ -1,8 +1,9 @@
 var bookMarkList = [];
-var stateView = "view";
-var stateEdit = "edit";
 var state = "view";
 var editIndex = -1;
+const stateView = "view";
+const stateEdit = "edit";
+const TilesInfoKey = 'TilesInfoKey';
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -18,18 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const optionsButtonList = document.getElementsByClassName("actionButton");
 	for (i = 0; i < optionsButtonList.length; i++) {
-		optionsButtonList[i].addEventListener('click', process_actionButtonClick);
+		optionsButtonList[i].addEventListener('click', handleMenuButtonClick);
 	}
 
-	state = stateView;
 	logMessage("INIT: ", "End");
 });
 
 
 //read storage for tile list and add them to HTML page
 function readFromStorage() {
-	var TilesInfoKey = 'TilesInfoKey';
-
 	chrome.storage.local.get([TilesInfoKey], function (jsonArrayStr) {
 		if (!jsonArrayStr.TilesInfoKey) {
 			logMessage("Read_Storage: ", "get key.TilesInfoKey=UNDEFINED, restore from file");
@@ -46,7 +44,6 @@ function readFromStorage() {
 
 //write tiles list (JSON array) to storage
 function writeToStorage(jsonArray) {
-	var TilesInfoKey = 'TilesInfoKey';
 	var jsonArrayStr = JSON.stringify(jsonArray);
 	logMessage("Write_Storage: ", "tileInfoStr=" + jsonArrayStr);
 
@@ -88,9 +85,9 @@ function writeToInputFile(jsonArray) {
 function addMultipleTiles(jsonArray) {
 	logMessage("Add_MultipleTiles: ", "jsonArray=" + jsonArray.length);
 
-	for (i = 0; i < jsonArray.length; i++) {
-		var tileInfo = jsonArray[i];
-		addOneTile(tileInfo.title, tileInfo.url, i);
+	for (index = 0; index < jsonArray.length; index++) {
+		var tileInfo = jsonArray[index];
+		addOneTile(tileInfo.title, tileInfo.url, index);
 	}
 }
 
@@ -101,8 +98,8 @@ function addOneTile(title, url, index) {
 		const gridList = document.getElementsByClassName("gridTiles");
 
 		const buttonList = gridList[0].getElementsByClassName("tileButton");
-		if (buttonList.length > 30) {
-			logMessage("addOneTile: ", "ERROR - Tile limit of 30 reached");
+		if (buttonList.length > 35) {
+			logMessage("Add_OneTile: ", "ERROR - Tile limit of 36 reached");
 			return;
 		}
 
@@ -111,8 +108,8 @@ function addOneTile(title, url, index) {
 		button.className = "tileButton";
 		button.value = url;
 		button.innerText = title;
-		button.addEventListener("click", function() {
-			process_tileButtonClick(button, index);
+		button.addEventListener("click", function () {
+			handleTileButtonClick(button, index);
 		});
 
 		// add icon
@@ -143,14 +140,14 @@ function addOneTile(title, url, index) {
 	}
 }
 
-//remove one tile from HTML page by matching title
+// update one tile from HTML page by matching title
 function updateOneTile(title, url) {
 	logMessage("Update_OneTile: ", "title=" + title + ", url=" + url + ", index=" + editIndex);
 	if (title.length != 0 && editIndex > -1) {
 		const gridList = document.getElementsByClassName("gridTiles");
 		const tileButtomList = gridList[0].getElementsByClassName("tileButton");
 		if (tileButtomList.length != 0 && editIndex < tileButtomList.length) {
-			logMessage("updateOneTile: ", "FOUND @ " + editIndex);
+			logMessage("Update_OneTile: ", "FOUND @ " + editIndex);
 			var button = tileButtomList[editIndex];
 			button.innerText = title;
 			button.value = url;
@@ -158,14 +155,14 @@ function updateOneTile(title, url) {
 	}
 }
 
-//remove one tile from HTML page by matching title
-function removeOneTile() {
-	logMessage("Remove_OneTile: ", "index=" + editIndex);
+// delte one tile from HTML page by matching title
+function deleteOneTile() {
+	logMessage("Delete_OneTile: ", "index=" + editIndex);
 	if (editIndex > -1) {
 		const gridList = document.getElementsByClassName("gridTiles");
 		const tileButtomList = gridList[0].getElementsByClassName("tileButton");
 		if (tileButtomList.length != 0 && editIndex < tileButtomList.length) {
-			logMessage("removeOneTile: ", "FOUND @ " + editIndex);
+			logMessage("Delete_OneTile: ", "FOUND @ " + editIndex);
 			var button = tileButtomList[editIndex];
 			gridList[0].removeChild(button);
 		}
@@ -175,9 +172,7 @@ function removeOneTile() {
 //fetch list of tiles and build corresponding JSON array
 function createTilesJsonArray() {
 	var jsonArray = [];
-
 	const gridList = document.getElementsByClassName("gridTiles");
-
 	const buttonList = gridList[0].getElementsByClassName("tileButton");
 	for (i = 0; i < buttonList.length; i++) {
 		jsonArray.push({
@@ -189,18 +184,11 @@ function createTilesJsonArray() {
 	return jsonArray;
 }
 
-function createTilesJsonArrayEditor() {
-	var jsonArray = [];
-
+//fetch the count of tiles
+function getTilesArrayLength() {
 	const gridList = document.getElementsByClassName("gridTiles");
-
 	const buttonList = gridList[0].getElementsByClassName("tileButton");
-	for (i = 0; i < buttonList.length; i++) {
-		jsonArray.push({
-			"title": buttonList[i].innerText,
-			"url": buttonList[i].value
-		});
-	}
+	return buttonList.length;
 }
 
 //handle loading of book-marks
@@ -219,9 +207,9 @@ function addBookmark(select) {
 }
 
 //handle tile-button press
-function process_tileButtonClick(target, index) {
+function handleTileButtonClick(target, index) {
 	//var target = event.target || event.srcElement;
-	logMessage("process_tileButtonClick: ", "target=" + target + ", class="
+	logMessage("Click_TileButton: ", "target=" + target + ", class="
 		+ target.className + ", index=" + index);
 
 	if (state == stateView) {
@@ -276,57 +264,55 @@ function process_bookmark(bookmarks) {
 	}
 }
 
-//handle ADD, REMOVE, SAVE, CLEAR, RESTORE, ADD TILE
-function process_buttonClick(event) {
+// handle PopUp menu button clicks --> CANCEL, SUBMIT, DELETE
+function handlePopUpButtonClick(event) {
 	var target = event.target || event.srcElement;
-	logMessage("Button_Click: ", "target=" + target + ", class="
+	logMessage("Click_PopUpButton: ", "target=" + target + ", class="
 		+ target.className);
 
 	if (target.id == "actionCancel") {
+		//no action
 	} else if (target.id == "actionSubmitAdd") {
+		// add new tile to end of array
 		var inputTitle = document.getElementById("popup_add_title").value;
 		var inputUrl = document.getElementById("popup_add_url").value;
-		addOneTile(inputTitle, inputUrl);
-	} else if (target.id == "actionSubmitRemove") {
+		var inputIndex = getTilesArrayLength();
+		addOneTile(inputTitle, inputUrl, inputIndex);
+	} else if (target.id == "actionSubmitUpdate") {
 		// update the tile details
 		var updatedTitle = document.getElementById("popup_edit_title").value;
 		var updatedUrl = document.getElementById("popup_edit_url").value;
-		updateOneTile(updatedTitle, updatedUrl, );
-		// save changes
-		var jsonArray = createTilesJsonArray();
-		writeToStorage(jsonArray);
+		updateOneTile(updatedTitle, updatedUrl);
 	} else if (target.id == "actionDelete") {
 		// delete the tile
 		var inputTitle = document.getElementById("popup_edit_title").value;
-		removeOneTile();
-		// save changes
-		var jsonArray = createTilesJsonArray();
-		writeToStorage(jsonArray);
-
+		deleteOneTile();
 	}
 
-	removeChildren();
+	// save changes
+	var jsonArray = createTilesJsonArray();
+	writeToStorage(jsonArray);
+	writeToInputFile(jsonArray);
 
-	// bring the state out of edit mode
-	state = stateView;
-	editIndex =-1;
+	// close popup
+	hidePopUpMenu();
 }
 
-// handle ADD, REMOVE, EDIT, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
-function process_actionButtonClick(event) {
+// handle right-menu buttons ADD, EDIT, SAVE, CLEAR, RESTORE, EXPORT, CONSOLE
+function handleMenuButtonClick(event) {
 	var target = event.target || event.srcElement;
-	logMessage("HEADER_Button_Click: ", "target=" + target + ", class="
+	logMessage("Click_MenuButton: ", "target=" + target + ", class="
 		+ target.className + ", id=" + target.id);
 
 	var actionContainer = document.getElementById("actionContainer");
 	actionContainer.style.visibility = "visible";
 
 	if (target.id == "add") {
-		showAddPopup();
-	} else if (target.id == "remove") {
-		showRemovePopup();
+		var menu = createAddPopUpMenu();
+		showPopUpMenu(menu);
 	} else if (target.id == "edit") {
-		showEditPopup();
+		var menu = createEditPopUpMenu();
+		showPopUpMenu(menu);
 	} else if (target.id == "save") {
 		var jsonArray = createTilesJsonArray();
 		writeToStorage(jsonArray);
@@ -356,7 +342,9 @@ function process_actionButtonClick(event) {
 }
 
 //show the user input pop-up
-function showAddPopup() {
+function createAddPopUpMenu() {
+	logMessage("Create_Add_PopUpMenu: ", "");
+
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
 	inputTitle.type = "text";
@@ -372,12 +360,12 @@ function showAddPopup() {
 	var cancelButton = document.createElement("button");
 	cancelButton.className = "formActionButton actionCancel";
 	cancelButton.id = "actionCancel";
-	cancelButton.addEventListener('click', process_buttonClick);
+	cancelButton.addEventListener('click', handlePopUpButtonClick);
 
 	var addButton = document.createElement("button");
 	addButton.className = "formActionButton actionSubmit";
 	addButton.id = "actionSubmitAdd";
-	addButton.addEventListener('click', process_buttonClick);
+	addButton.addEventListener('click', handlePopUpButtonClick);
 
 	var gridAdd = document.createElement("div");
 	gridAdd.className = "grid_popup-add";
@@ -388,44 +376,11 @@ function showAddPopup() {
 	gridAdd.appendChild(cancelButton);
 	gridAdd.appendChild(addButton);
 
-	replaceChildren(gridAdd);
+	return gridAdd;
 }
 
-//show the user input pop-up
-function showRemovePopup() {
-	var inputTitle = document.createElement("input");
-	inputTitle.className = "input title";
-	inputTitle.type = "text";
-	inputTitle.id = "popup_remove_title";
-	inputTitle.placeholder = "Title, e.g. Google";
-
-	var cancelButton = document.createElement("button");
-	cancelButton.className = "formActionButton actionCancel";
-	cancelButton.id = "actionCancel";
-	cancelButton.addEventListener('click', process_buttonClick);
-
-	var removeButton = document.createElement("button");
-	removeButton.className = "formActionButton actionSubmit";
-	removeButton.id = "actionSubmitRemove";
-	removeButton.addEventListener('click', process_buttonClick);
-
-	var gridRemove = document.createElement("div");
-	gridRemove.className = "grid_popup-remove";
-	gridRemove.id = "grid_popup-remove";
-
-	gridRemove.appendChild(inputTitle);
-	gridRemove.appendChild(cancelButton);
-	gridRemove.appendChild(removeButton);
-
-	replaceChildren(gridRemove);
-}
-
-function showEditPopup() {
-	logMessage("showEditPopup: ");
-
-	// bring the state into edit mode
-	state = stateEdit;
-	editIndex =-1;
+function createEditPopUpMenu() {
+	logMessage("Create_Edit_PopUpMenu: ", "");
 
 	var inputTitle = document.createElement("input");
 	inputTitle.className = "input title";
@@ -442,17 +397,17 @@ function showEditPopup() {
 	var cancelButton = document.createElement("button");
 	cancelButton.className = "formActionButton actionCancel";
 	cancelButton.id = "actionCancel";
-	cancelButton.addEventListener('click', process_buttonClick);
+	cancelButton.addEventListener('click', handlePopUpButtonClick);
 
-	var removeButton = document.createElement("button");
-	removeButton.className = "formActionButton actionSubmit";
-	removeButton.id = "actionSubmitRemove";
-	removeButton.addEventListener('click', process_buttonClick);
+	var updateButton = document.createElement("button");
+	updateButton.className = "formActionButton actionSubmit";
+	updateButton.id = "actionSubmitUpdate";
+	updateButton.addEventListener('click', handlePopUpButtonClick);
 
 	var dleteButton = document.createElement("button");
 	dleteButton.className = "formActionButton actionDelete";
 	dleteButton.id = "actionDelete";
-	dleteButton.addEventListener('click', process_buttonClick);
+	dleteButton.addEventListener('click', handlePopUpButtonClick);
 
 	var gridEdit = document.createElement("div");
 	gridEdit.className = "grid_popup-edit";
@@ -461,28 +416,38 @@ function showEditPopup() {
 	gridEdit.appendChild(inputTitle);
 	gridEdit.appendChild(inputUrl);
 	gridEdit.appendChild(cancelButton);
-	gridEdit.appendChild(removeButton);
+	gridEdit.appendChild(updateButton);
 	gridEdit.appendChild(dleteButton);
 
-	replaceChildren(gridEdit);
+	return gridEdit;
 }
 
-function removeChildren() {
+function showPopUpMenu(newChild) {
 	const gridList = document.getElementsByClassName("gridPopup");
 
-	while (gridList[0].hasChildNodes()) {
-		gridList[0].removeChild(gridList[0].lastChild);
-	}
-}
-
-function replaceChildren(newChild) {
-	const gridList = document.getElementsByClassName("gridPopup");
-
+	// clear old menus
 	while (gridList[0].hasChildNodes()) {
 		gridList[0].removeChild(gridList[0].lastChild);
 	}
 
+	// add new menu
 	gridList[0].appendChild(newChild);
+
+	// bring the state into edit mode
+	state = stateEdit;
+	editIndex = -1;	
+}
+
+function hidePopUpMenu() {
+	const gridList = document.getElementsByClassName("gridPopup");
+
+	while (gridList[0].hasChildNodes()) {
+		gridList[0].removeChild(gridList[0].lastChild);
+	}
+
+	// bring the state out of edit mode
+	state = stateView;
+	editIndex = -1;
 }
 
 //simple logger
