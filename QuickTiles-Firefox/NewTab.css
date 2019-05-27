@@ -1,107 +1,110 @@
-
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:900);
 @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
-
-
-
 /* ----------------------- background ------------------------ */
+
 body {
- 	background-image: url("images/background8.jpeg");
-    background-size: cover;
+	background-image: url("images/background8.jpeg");
+	background-size: cover;
 	margin: 0;
 }
 
 /* ------------------------- header  ------------------------ */
 
 article {
-    float: left;
-    text-align: center;
-    width: 85%;
-    background-color: transparent;
-    height: 100%;
+	float: left;
+	text-align: center;
+	width: 83%;
+	background-color: transparent;
+	height: 100%;
 }
 
 h1 {
-	font-size: 350%;
+	font-size: 250%;
 	font-family: Lucida Console;
 	text-align: center;
 	font-style: italic;
 	color: white;
-    margin-left: 19%;
-    margin-right: 0;
+	margin-left: 19%;
+	margin-right: 0;
 }
 
 nav {
-    float: right;
-    width: 5%;
-    color: black;
+	float: right;
+	width: 5%;
+	color: black;
 	padding: 1em 1em;
-    margin-top: 1%;
-    margin-right: 2%;
+	margin-top: 1%;
+	margin-right: 2%;
 }
 
 .optionsButton {
 	background: url('images/actionOptions.png') no-repeat transparent center;
-    float: right;
+	float: right;
 	padding: 3em 3em;
 	border: none;
- 	color: white;
+	color: white;
 	cursor: pointer;
-	backgroundSize: 5%;
 }
 
 .actionContainer {
 	display: none;
-    position: absolute;
+	position: absolute;
 	color: black;
-    transition: 5s;
+	transition: 5s;
 }
 
 .actionButton {
 	cursor: pointer;
 	padding: 2em 1em;
-    width: 60%;
-    border: none;
+	width: 60%;
+	border: none;
 }
 
-.actionButton:hover 		{ border: 2px solid white; }
-nav:hover .actionContainer 	{ display: block; } 
-nav:hover .optionsButton 	{ display: none }
+.actionButton:hover {
+	border: 2px solid white;
+}
+
+nav:hover .actionContainer {
+	display: block;
+}
+
+nav:hover .optionsButton {
+	display: none
+}
 
 .actionAdd {
 	background: url('images/actionAdd.png') no-repeat transparent center;
 }
 
-.actionRemove {
-  	background: url('images/actionRemove.png') no-repeat transparent center;
+.actionEdit {
+	background: url('images/actionEdit.png') no-repeat transparent center;
 }
 
 .actionSave {
-  	background: url('images/actionSave.png') no-repeat transparent center;
+	background: url('images/actionSave.png') no-repeat transparent center;
 }
 
 .actionClear {
-  	background: url('images/actionClear.png') no-repeat transparent center;
+	background: url('images/actionClear.png') no-repeat transparent center;
 }
 
 .actionRestore {
-  	background: url('images/actionRestore.png') no-repeat transparent center;
+	background: url('images/actionRestore.png') no-repeat transparent center;
 }
 
 .actionExport {
-  	background: url('images/actionExport.png') no-repeat transparent center;
+	background: url('images/actionExport.png') no-repeat transparent center;
 }
 
 .actionConsole {
-  	background: url('images/actionConsole.png') no-repeat transparent center;
+	background: url('images/actionConsole.png') no-repeat transparent center;
 }
 
 section:after {
-    content: "";
-    display: table;
-    clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
-
 
 /* ------------------------- footer ------------------------- */
 
@@ -116,7 +119,7 @@ section:after {
 
 .footer_button {
 	float: left;
-    margin: 2px;
+	margin: 2px;
 	color: white;
 	font-size: 110%;
 	text-align: center;
@@ -124,7 +127,7 @@ section:after {
 	border: 1px solid white;
 	border-radius: 5px;
 	background-color: transparent;
- 	color: white;
+	color: white;
 	cursor: pointer;
 }
 
@@ -136,37 +139,37 @@ section:after {
 	background-color: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
- 	color: white;
- 	padding: 0em 0em 0em 1em;
+	color: white;
+	padding: 0em 0em 0em 1em;
 }
 
 .console-text:focus {
-    outline: none !important;
+	outline: none !important;
 }
 
 /* -------------------- main grid container -------------------- */
+
 .gridMain {
 	display: grid;
-	grid-template-columns: 100%;
+	grid-template-columns: 95%;
 	grid-gap: 2em 0em;
 }
 
 /* -------------------- left grid with tiles -------------------- */
+
 .gridTileContainer {
 	display: inline-grid;
 	grid-template-columns: 10% 80% 10%;
 	grid-template-rows: auto;
-	grid-template-areas:
-				". gridTiles ."
-				". bookmarks .";
-	grid-gap: 5em 0em;
+	grid-template-areas: ". gridTiles ." ". bookmarks .";
+	grid-gap: 3em 0em;
 }
 
 .gridTiles {
 	grid-area: gridTiles;
 	display: inline-grid;
-	grid-template-columns: repeat(6, 14.33%);
-	grid-gap: 3em;
+	grid-template-columns: repeat(6, 15.5%);
+	grid-gap: 2em;
 	width: 100%;
 }
 
@@ -174,39 +177,38 @@ section:after {
 	cursor: pointer;
 	color: white;
 	text-align: left;
-	font-size: 150%;
+	font-size: 112%;
 	padding: 1em 0em 1em 1em;
-  	border-radius: 5px;
+	border-radius: 5px;
 	border: 1px solid white;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
-    transition: 0.2s;
+	box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.3);
+	transition: 0.2s;
 }
 
 .tileButton:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
 
 .bookmarks {
 	grid-area: bookmarks;
-	padding: 1em 1em;
 	color: white;
 	background-color: transparent;
-	font-size: 110%;
+	font-size: 80%;
 	border-radius: 5px;
 	border: 1px solid white;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.3);
+	box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.3);
 	width: 40%;
 	margin-left: auto;
 	margin-right: auto;
-    transition: 0.2s;
- }
-
-.bookmarks:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+	transition: 0.2s;
 }
 
+.bookmarks:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
 
 /* -------------------- grid pop-up -------------------- */
+
 .gridPopup {
 	display: inline-grid;
 	grid-template-columns: 40% 20% 40%;
@@ -257,24 +259,27 @@ section:after {
 
 .actionCancel {
 	grid-area: cancel;
-  	background: url('images/actionCancel.png') no-repeat transparent center;
+	background: url('images/actionCancel.png') no-repeat transparent center;
 }
 
 .actionSubmit {
 	grid-area: submit;
-  	background: url('images/actionSubmit.png') no-repeat transparent center;
+	background: url('images/actionSubmit.png') no-repeat transparent center;
+}
+
+.actionDelete {
+	grid-area: delete;
+	background: url('images/actionDelete.png') no-repeat transparent center;
 }
 
 /* -------------------- add pop-up -------------------- */
+
 .grid_popup-add {
 	grid-area: popup;
 	display: grid;
 	grid-template-columns: 30% 30% 30%;
 	grid-template-rows: auto;
-	grid-template-areas:
-		"title title title"
-		"url url url"
-		"cancel . submit";
+	grid-template-areas: "title title title" "url url url" "cancel . submit";
 	color: white;
 	background-color: transparent;
 	grid-gap: 1em;
@@ -284,26 +289,25 @@ section:after {
 }
 
 .grid_popup-add:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
 
-/* -------------------- remove pop-up -------------------- */
-.grid_popup-remove {
+/* -------------------- edit pop-up -------------------- */
+
+.grid_popup-edit {
 	grid-area: popup;
 	display: grid;
 	grid-template-columns: 30% 30% 30%;
 	grid-template-rows: auto;
-	grid-template-areas:
-		"title title title"
-		"cancel . submit";
+	grid-template-areas: "title title title" "url url url" "cancel submit delete";
 	color: white;
 	background-color: transparent;
 	grid-gap: 1em;
 	text-align: center;
 	padding: 1em 1em;
-	height: 9em;
+	height: 12em;
 }
 
-.grid_popup-remove:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+.grid_popup-edit:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
 }
