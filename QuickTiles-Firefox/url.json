@@ -1,43 +1,7 @@
 [
    {
-      "title": "Dev-Portal",
-      "url": "https://devportal.intuit.com/app/dp/awsAccounts"
-   },
-   {
-      "title": "JIRA",
-      "url": "https://jira.intuit.com/secure/RapidBoard.jspa?rapidView=19983"
-   },
-   {
-      "title": "GIT",
-      "url": "https://github.intuit.com/Contact-Center-Services"
-   },
-   {
-      "title": "Spinnaker",
-      "url": "https://ebs.spinnaker.intuit.com/#/applications/ccs/executions"
-   },
-   {
-      "title": "Confluence",
-      "url": "https://wiki.intuit.com"
-   },
-   {
       "title": "Yahoo",
       "url": "http://mail.yahoo.com"
-   },
-   {
-      "title": "Splunk-Prerod",
-      "url": "https://ebssplunk-preprod.intuit.net/en-US/app/ebs_search/search?q=search%20index%3Dicspreprod_app&display.page.search.mode=verbose&dispatch.sample_ratio=1&earliest=-1h&latest=now&sid=1551163142.1421901_029E176F-286D-499A-ABD7-A512AC85EB44"
-   },
-   {
-      "title": "Splunk-Prod",
-      "url": "https://ebssplunk.intuit.net/en-US/app/search/search?q=search%20index%20%3D%22ininicwsprod_app%22&display.page.search.mode=smart&dispatch.sample_ratio=1&earliest=-1h&latest=now&sid=1551697322.43252_1A3CD38E-5F2A-4397-B3BB-7BEA30C8FF3F"
-   },
-   {
-      "title": "OIL Prod",
-      "url": "https://ebssplunk.intuit.net/en-US/app/search/search?q=search%20index%3D%22lambda_logs%22%20%20loggroup%3D%22%2Faws%2Flambda%2Fccs-appointment-status-lambda%22%20ccs-appointment-status-lambda&display.page.search.mode=smart&dispatch.sample_ratio=1&earliest=-24h%40h&latest=now&sid=1551950088.304253_9958C0BD-FAF3-44EF-B49D-97D5EDAAB008"
-   },
-   {
-      "title": "OIL PrePrpd",
-      "url": "https://ebssplunk-preprod.intuit.net/en-US/app/search/search?q=search%20index%3D%22lambda_logs%22%20%20loggroup%3D%22%2Faws%2Flambda%2Fccs-appointment-status-lambda-e2e%22%20ccs-appointment-status-lambda-e2e&display.page.search.mode=smart&dispatch.sample_ratio=1&earliest=-24h%40h&latest=now&sid=1551950014.1885349_00220204-DAD8-44CC-AC19-ABBADEDEE350"
    },
    {
       "title": "Alti-Coral",
@@ -94,25 +58,5 @@
    {
       "title": "myGIT",
       "url": "https://github.com/sumeshm/"
-   },
-   {
-      "title": "Service-Now",
-      "url": "https://intuit.service-now.com/sp?id=my_tickets"
-   },
-   {
-      "title": "TEP",
-      "url": "https://testexecution.platform.intuit.com/ui/home.html#/tep/detail/tepusage"
-   },
-   {
-      "title": "CSHQ-dev",
-      "url": "https://silver-develop.qbo.intuit.com/app/cip-cshq-ui"
-   },
-   {
-      "title": "CSHQ-e2e",
-      "url": "https://silver-release.qbo.intuit.com/app/cip-cshq-ui"
-   },
-   {
-      "title": "CSHQ-prod",
-      "url": "https://appfabric.intuit.com/app/cip-cshq-ui"
    }
 ]
