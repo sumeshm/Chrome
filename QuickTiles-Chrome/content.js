@@ -75,10 +75,17 @@ function readInputFile() {
 
 //read JSON file for tile list and add them to HTML page
 function writeToInputFile(jsonArray) {
-	var jsonArrayStr = JSON.stringify(jsonArray);
-	logMessage("Write_file: ", "tileInfoStr:");
+	var jsonArrayStr = JSON.stringify(jsonArray, undefined, 4);
+	logMessage("Write_to_tab: ", "tileInfoStr:");
 	logMessage("", jsonArrayStr);
-	// todo: write to a file
+
+	// write file to new Tab
+	var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>var obj = { test1: 'pass', test2: 'fail2' };document.getElementById('json').innerHTML=JSON.stringify(obj, undefined, 4);</script></body></html>"
+	// var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>document.getElementById('json').innerHTML='{}'};</script></body></html>"
+	var url = "data:text/html," + encodeURIComponent(template);
+	chrome.tabs.create(
+		{url: url}
+	);	
 }
 
 // add tiles to HTML page, for given JSON array (tile-info objects)
@@ -98,10 +105,10 @@ function addOneTile(title, url, index) {
 		const gridList = document.getElementsByClassName("gridTiles");
 
 		const buttonList = gridList[0].getElementsByClassName("tileButton");
-		if (buttonList.length > 35) {
-			logMessage("Add_OneTile: ", "ERROR - Tile limit of 36 reached");
-			return;
-		}
+		// if (buttonList.length > 35) {
+		// 	logMessage("Add_OneTile: ", "ERROR - Tile limit of 36 reached");
+		// 	return;
+		// }
 
 		var button = document.createElement("button");
 		logMessage("Add_OneTile: ", "button=" + button);
