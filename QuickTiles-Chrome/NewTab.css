@@ -24,7 +24,7 @@ h1 {
 	text-align: center;
 	font-style: italic;
 	color: white;
-	margin-left: 19%;
+	margin-left: 15%;
 	margin-right: 0;
 }
 
@@ -134,14 +134,14 @@ section:after {
 
 .console-text {
 	width: 99%;
-	height: 15em;
+	height: 50em;
 	display: none;
 	resize: none;
 	background-color: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
 	color: white;
-	padding: 0em 0em 0em 1em;
+	padding: 1em 1em 1em 1em;
 }
 
 .console-text:focus {
@@ -164,6 +164,13 @@ section:after {
 	grid-template-rows: auto;
 	grid-template-areas: ". gridTiles ." ". bookmarks .";
 	grid-gap: 5em 0em;
+}
+
+.gridConsole {
+	width: 85%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2em 2em 3em 2em;
 }
 
 .gridTiles {
@@ -192,10 +199,10 @@ section:after {
 
 .bookmarks {
 	grid-area: bookmarks;
-	padding: 1em 1em;
+	padding: 0.4em;
 	color: white;
 	background-color: transparent;
-	font-size: 110%;
+	font-size: 130%;
 	border-radius: 5px;
 	border: 1px solid white;
 	box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.3);
@@ -206,7 +213,7 @@ section:after {
 }
 
 .bookmarks:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.8);
 }
 
 /* -------------------- grid pop-up -------------------- */
@@ -230,8 +237,8 @@ section:after {
 	padding: 1em 1em;
 	border-radius: 5px;
 	border: 1px solid white;
-	height: 80%;
-	width: 100%;
+	height: 75%;
+	width: 90%;
 }
 
 .title {

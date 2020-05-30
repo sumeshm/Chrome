@@ -73,19 +73,20 @@ function readInputFile() {
 	fileReadRequest.send();
 }
 
-//read JSON file for tile list and add them to HTML page
+// read JSON file for tile list and add them to HTML page
 function writeToInputFile(jsonArray) {
 	var jsonArrayStr = JSON.stringify(jsonArray, undefined, 4);
 	logMessage("Write_to_tab: ", "tileInfoStr:");
 	logMessage("", jsonArrayStr);
 
 	// write file to new Tab
-	var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>var obj = { test1: 'pass', test2: 'fail2' };document.getElementById('json').innerHTML=JSON.stringify(obj, undefined, 4);</script></body></html>"
-	// var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>document.getElementById('json').innerHTML='{}'};</script></body></html>"
-	var url = "data:text/html," + encodeURIComponent(template);
-	chrome.tabs.create(
-		{url: url}
-	);	
+	// var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>var obj = { test1: 'pass', test2: 'fail2' };document.getElementById('json').innerHTML=JSON.stringify(obj, undefined, 4);</script></body></html>"
+	// // var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>document.getElementById('json').innerHTML='{}'};</script></body></html>"
+	// var url = "data:text/html," + encodeURIComponent(template);
+	// chrome.tabs.create(
+	// 	{url: url}
+	// );
+
 }
 
 // add tiles to HTML page, for given JSON array (tile-info objects)
@@ -105,10 +106,10 @@ function addOneTile(title, url, index) {
 		const gridList = document.getElementsByClassName("gridTiles");
 
 		const buttonList = gridList[0].getElementsByClassName("tileButton");
-		// if (buttonList.length > 35) {
-		// 	logMessage("Add_OneTile: ", "ERROR - Tile limit of 36 reached");
-		// 	return;
-		// }
+		if (buttonList.length > 60) {
+			logMessage("Add_OneTile: ", "ERROR - Tile limit of 36 reached");
+			return;
+		}
 
 		var button = document.createElement("button");
 		logMessage("Add_OneTile: ", "button=" + button);
@@ -235,7 +236,7 @@ function handleTileButtonClick(target, index) {
 	}
 }
 
-//handle selection of book-mark from drop down list
+// handle selection of book-mark from drop down list
 function process_listChange() {
 	logMessage("BookMark_Selected", "")
 	var selectBookmarks = document.querySelector('.bookmarks');
@@ -249,7 +250,7 @@ function process_listChange() {
 	}
 }
 
-//handle loading of book-marks
+// handle loading of book-marks
 function process_bookmark(bookmarks) {
 	logMessage("BookMark_Loaded: ", "bookmarks:" + bookmarks.length)
 
@@ -260,7 +261,13 @@ function process_bookmark(bookmarks) {
 		if (bookmark.url) {
 			bookMarkList.push(bookmark);
 			var option = document.createElement("option");
-			option.text = bookmark.title;
+			//option.text = bookmark.title;
+			if (bookmark.title.length > 50) {
+				// limit size
+				option.text = bookmark.title.substring(0, 50);
+			} else {
+				option.text = bookmark.title;
+			}
 			option.value = bookmark.url;
 			select.add(option);
 		}
@@ -477,4 +484,10 @@ function logMessage(prefix, postfix) {
 		consoleTextArea.value += timeStamp;
 		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
 	}
+}
+
+
+
+function exportTab() {
+
 }

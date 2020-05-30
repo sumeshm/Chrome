@@ -8,17 +8,17 @@
        "url":"https://jira.intuit.com/secure/RapidBoard.jspa?rapidView=19983"
    },
    {
-       "title":"GIT-CCS",
+       "title":"CCS",
        "url":"https://github.intuit.com/Contact-Center-Services"
    },
    {
-       "title":"GIT-CSSL",
+       "title":"CSSL",
        "url":"https://github.intuit.com/CSSL/"
    },
    {
-       "title":"Confluence",
-       "url":"https://wiki.intuit.com"
-   },
+    "title":"IKS",
+    "url":"https://github.intuit.com/intcollabs-userengage"
+    },
    {
        "title":"Yahoo",
        "url":"http://mail.yahoo.com"
@@ -36,18 +36,42 @@
        "url":"https://ebssplunk-perf.intuit.net/en-US/app/search/search"
    },
    {
-       "title":"OIL PrePrpd",
-       "url":"https://ebssplunk-preprod.intuit.net/en-US/app/search/search?q=search%20index%3Dlambda_logs%20%20loggroup%3A%3A%2Faws%2Flambda%2Fintuit-cshqApi-dev-us-west-2&display.page.search.mode=verbose&dispatch.sample_ratio=1&earliest=-60m%40m&latest=now&sid=1564947332.1243992_00220204-DAD8-44CC-AC19-ABBADEDEE350"
+       "title":"Wiki-RBAC",
+       "url":"https://wiki.intuit.com/display/CIOSC/CSHQ+-+RBAC"
    },
    {
        "title":"Alti-Coral",
        "url":"https://o365altimetrik.sharepoint.com/Pages/Default.aspx"
    },
    {
-       "title":"Alti-Mail",
-       "url":"https://outlook.office365.com/owa/?realm=altimetrik.com&exsvurl=1&ll-cc=2057&modurl=0"
+       "title":"Alti",
+       "url":"https://www.myemploywise.com/asperm/servlet/ggs.erm.servlet.setup6.ViewNavigation?modulename=homepage&viewname=needtoact&status=true"
    },
    {
+       "title":"SNOW-CR",
+       "url":"https://intuit.service-now.com/navpage.do"
+   },
+   {
+       "title":"TEP",
+       "url":"https://testexecution.platform.intuit.com/ui/home.html#/tep/detail/tepusage"
+   },
+   {
+       "title":"IKSM",
+       "url":"https://iksm.intuit.com/namespaces"
+   },
+   {
+       "title":"ArgoCD",
+       "url":"https://t4i.argocd.tools-k8s-prd.a.intuit.com/applications"
+   },
+   {
+       "title":"Service-Now",
+       "url":"https://intuit.service-now.com/sp?id=my_tickets"
+   },
+   {
+       "title":"Gmail",
+       "url":"https://mail.google.com/mail/u/0/#inbox"
+   },
+      {
        "title":"Bescom",
        "url":"https://www.bescom.co.in/SCP/Myhome.aspx"
    },
@@ -68,10 +92,6 @@
        "url":"https://ebfz.fa.us2.oraclecloud.com/hcmUI/faces/FuseWelcome?_afrLoop=4924040914946095&_adf.ctrl-state=10rhv2oz0s_19"
    },
    {
-       "title":"Gmail",
-       "url":"https://mail.google.com/mail/u/0/#inbox"
-   },
-   {
        "title":"Airtel",
        "url":"https://www.airtel.in/s/selfcare"
    },
@@ -88,6 +108,10 @@
        "url":"https://www.online.citibank.co.in/"
    },
    {
+       "title":"SBI",
+       "url":"https://retail.onlinesbi.com/retail/login.htm"
+   },
+   {
        "title":"Team-BHP",
        "url":"https://www.team-bhp.com/forum"
    },
@@ -96,51 +120,7 @@
        "url":"https://github.com/sumeshm/"
    },
    {
-       "title":"Service-Now",
-       "url":"https://intuit.service-now.com/sp?id=my_tickets"
-   },
-   {
-       "title":"TEP",
-       "url":"https://testexecution.platform.intuit.com/ui/home.html#/tep/detail/tepusage"
-   },
-   {
-       "title":"CSHQ-dev",
-       "url":"https://uxfabric-qal.app.intuit.com/app/cip-cshq-ui/homepage"
-   },
-   {
-       "title":"CSHQ-e2e",
-       "url":"https://uxfabric-e2e.app.intuit.com/app/cip-cshq-ui/homepage"
-   },
-   {
-       "title":"CSHQ-prod",
-       "url":"https://appfabric.intuit.com/app/cip-cshq-ui"
-   },
-   {
-       "title":"Wiki-RBAC",
-       "url":"https://wiki.intuit.com/display/CIOSC/CSHQ+-+RBAC"
-   },
-   {
-       "title":"GIT-CshqAPi",
-       "url":"https://github.intuit.com/CSSL/cip-cshq-api-lambda"
-   },
-   {
-       "title":"GIT-IKS",
-       "url":"https://github.intuit.com/intcollabs-userengage"
-   },
-   {
-       "title":"IKSM",
-       "url":"https://iksm.intuit.com/namespaces"
-   },
-   {
-       "title":"SBI",
-       "url":"https://retail.onlinesbi.com/retail/login.htm"
-   },
-   {
-       "title":"Argo",
-       "url":"https://t4i.argocd.tools-k8s-prd.a.intuit.com/applications"
-   },
-   {
-       "title":"IKS-QStats-P",
-       "url":"https://github.intuit.com/intcollabs-userengage/qstat-cache"
+       "title":"myGIT",
+       "url":"https://quickbase.sso.intuit.com/"
    }
 ]
