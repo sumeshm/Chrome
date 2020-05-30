@@ -78,15 +78,6 @@ function writeToInputFile(jsonArray) {
 	var jsonArrayStr = JSON.stringify(jsonArray, undefined, 4);
 	logMessage("Write_to_tab: ", "tileInfoStr:");
 	logMessage("", jsonArrayStr);
-
-	// write file to new Tab
-	// var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>var obj = { test1: 'pass', test2: 'fail2' };document.getElementById('json').innerHTML=JSON.stringify(obj, undefined, 4);</script></body></html>"
-	// // var template = "<!DOCTYPE html><html><head><title>Export</title></head><body><pre id='json' /><script>document.getElementById('json').innerHTML='{}'};</script></body></html>"
-	// var url = "data:text/html," + encodeURIComponent(template);
-	// chrome.tabs.create(
-	// 	{url: url}
-	// );
-
 }
 
 // add tiles to HTML page, for given JSON array (tile-info objects)
@@ -352,6 +343,11 @@ function handleMenuButtonClick(event) {
 	} else if (target.id == "export") {
 		var jsonArray = createTilesJsonArray();
 		writeToInputFile(jsonArray);
+
+		// todo: for now show console untill file write is done
+		var consoleTextArea = document.getElementById("console-text")
+		consoleTextArea.style.display = "block";
+		consoleTextArea.scrollTop = consoleTextArea.scrollHeight + 10;
 	}
 }
 
